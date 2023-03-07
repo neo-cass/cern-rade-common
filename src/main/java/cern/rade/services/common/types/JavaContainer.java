@@ -21,6 +21,10 @@ public class JavaContainer<T> {
         return dataType;
     }
 
+    public void setData(T data) {
+        this.data = data;
+    }
+
     public String toString(){
         StringBuilder strB = new StringBuilder();
         strB.append("Name: ").append(fieldName).append("\n");

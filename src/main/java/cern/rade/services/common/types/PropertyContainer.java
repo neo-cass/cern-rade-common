@@ -23,10 +23,4 @@ public class PropertyContainer extends JavaContainer<JavaContainer[]>{
         strB.append(" ---\n");
         return strB.toString();
     }
-
-    public void jumble(){
-        JavaContainer<?> temp = data[0];
-        data[0] = data[1];
-        data[1] = temp;
-    }
 }
