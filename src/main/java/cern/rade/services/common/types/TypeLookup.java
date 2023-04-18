@@ -1,6 +1,8 @@
 package cern.rade.services.common.types;
 import cern.cmw.data.DataType;
+import cern.japc.value.ValueType;
 import cern.rade.services.common.types.labview.LVType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -152,6 +154,38 @@ public final class TypeLookup {
 //entry(LVType.VARIANT,Data_Type.DT_BYTE),
 //entry(LVType.UNKNOWN,Data_Type.DT_BYTE)
     ));
+
+    private static final HashMap<ValueType, DataType> lookupCMWByJAPCType = new HashMap<ValueType, DataType>( Map.ofEntries(
+            entry(ValueType.BYTE, DataType.DT_BYTE),
+            entry(ValueType.SHORT, DataType.DT_SHORT),
+            entry(ValueType.INT, DataType.DT_INT),
+            entry(ValueType.LONG, DataType.DT_LONG),
+            entry(ValueType.FLOAT,DataType.DT_FLOAT),
+            entry(ValueType.DOUBLE,DataType.DT_DOUBLE),
+            entry(ValueType.ENUM,DataType.DT_INT),
+            entry(ValueType.BOOLEAN,DataType.DT_BOOL),
+            entry(ValueType.STRING,DataType.DT_STRING),
+
+            entry(ValueType.BYTE_ARRAY, DataType.DT_BYTE_ARRAY),
+            entry(ValueType.SHORT_ARRAY, DataType.DT_SHORT_ARRAY),
+            entry(ValueType.INT_ARRAY, DataType.DT_INT_ARRAY),
+            entry(ValueType.LONG_ARRAY, DataType.DT_LONG_ARRAY),
+            entry(ValueType.FLOAT_ARRAY,DataType.DT_FLOAT_ARRAY),
+            entry(ValueType.DOUBLE_ARRAY,DataType.DT_DOUBLE_ARRAY),
+            entry(ValueType.ENUM_ARRAY,DataType.DT_INT_ARRAY),
+            entry(ValueType.BOOLEAN_ARRAY,DataType.DT_BOOL_ARRAY),
+            entry(ValueType.STRING_ARRAY,DataType.DT_STRING_ARRAY),
+
+            entry(ValueType.BYTE_ARRAY_2D, DataType.DT_BYTE_ARRAY_2D),
+            entry(ValueType.SHORT_ARRAY_2D, DataType.DT_SHORT_ARRAY_2D),
+            entry(ValueType.INT_ARRAY_2D, DataType.DT_INT_ARRAY_2D),
+            entry(ValueType.LONG_ARRAY_2D, DataType.DT_LONG_ARRAY_2D),
+            entry(ValueType.FLOAT_ARRAY_2D,DataType.DT_FLOAT_ARRAY_2D),
+            entry(ValueType.DOUBLE_ARRAY_2D,DataType.DT_DOUBLE_ARRAY_2D),
+            entry(ValueType.ENUM_ARRAY_2D,DataType.DT_INT_ARRAY_2D),
+            entry(ValueType.BOOLEAN_ARRAY_2D,DataType.DT_BOOL_ARRAY_2D),
+            entry(ValueType.STRING_ARRAY_2D,DataType.DT_STRING_ARRAY_2D)
+    ));
     private TypeLookup() {
 
     }
@@ -160,12 +194,13 @@ public final class TypeLookup {
     }
 
     public static DataType getCMWType(LVType lvType){return lookupCMWByLVType.get(lvType);}
+    public static DataType getCMWType(ValueType japcType){return lookupCMWByJAPCType.get(japcType);}
 
     public static byte getLVTypeCode(DataType dataType){return lookupUpLVTypeCodeByCMW.get(dataType);}
 
-    public static DataType getArrayType(DataType dt, int dim){
+    public static DataType getCMWType(DataType dt, int dimension){
             DataType dataType = null;
-            if (dim == 1){
+            if (dimension == 1){
                 switch(dt){
                     case DT_BYTE -> dataType = DataType.DT_BYTE_ARRAY;
                     case DT_SHORT -> dataType = DataType.DT_SHORT_ARRAY;
@@ -178,7 +213,7 @@ public final class TypeLookup {
                     case DT_DATA -> dataType = DataType.DT_DATA_ARRAY;
                 }
             }
-            else if (dim == 2){
+            else if (dimension == 2){
                 switch(dt){
                     case DT_BYTE -> dataType = DataType.DT_BYTE_ARRAY_2D;
                     case DT_SHORT -> dataType = DataType.DT_SHORT_ARRAY_2D;
@@ -191,7 +226,7 @@ public final class TypeLookup {
                     case DT_DATA -> dataType = DataType.DT_DATA_ARRAY_2D;
                 }
             }
-            else if (dim > 2){
+            else if (dimension > 2){
                 switch(dt){
                     case DT_BYTE -> dataType = DataType.DT_BYTE_MULTI_ARRAY;
                     case DT_SHORT -> dataType = DataType.DT_SHORT_MULTI_ARRAY;

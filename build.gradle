@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation ("cern.cmw:cmw-data:PRO")
+    implementation ("cern.japc:japc-value:PRO")
     implementation('org.apache.commons:commons-lang3:3.12.0')
 }
 
