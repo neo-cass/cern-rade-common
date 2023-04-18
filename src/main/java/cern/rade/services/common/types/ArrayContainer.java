@@ -5,8 +5,8 @@ public class ArrayContainer<T> extends JavaContainer<T[]>{
     private int[] dimensions;
     private String elemName;
     private DataType elemType;
-    public ArrayContainer(String fieldName, String elemName, T[] data, int[] dimensions, DataType dataType, DataType elemType)   {
-        super(fieldName, data, dataType);
+    public ArrayContainer(String name, String elemName, T[] data, int[] dimensions, DataType dataType, DataType elemType)   {
+        super(name, data, dataType);
         this.dimensions = dimensions;
         this.elemName = elemName;
         this.elemType = elemType;
@@ -16,7 +16,7 @@ public class ArrayContainer<T> extends JavaContainer<T[]>{
     public DataType getElemType() {return elemType;}
     public String toString(){
         StringBuilder strB = new StringBuilder();
-        strB.append("Name: ").append(fieldName).append("\n");
+        strB.append("Name: ").append(name).append("\n");
         strB.append("Array Type: ").append(dataType).append("\n");
         strB.append("Element Name: ").append(elemName).append("\n");
         strB.append("Element Type: ").append(elemType).append("\n");

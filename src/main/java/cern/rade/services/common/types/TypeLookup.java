@@ -155,15 +155,15 @@ public final class TypeLookup {
     private TypeLookup() {
 
     }
-    public static LVType getType(byte typeCode){
+    public static LVType getLVType(byte typeCode){
         return lookupLVTypeByCode.get(typeCode);
     }
 
-    public static DataType getType(LVType lvType){return lookupCMWByLVType.get(lvType);}
+    public static DataType getCMWType(LVType lvType){return lookupCMWByLVType.get(lvType);}
 
-    public static byte getByteFromCMW(DataType dataType){return lookupUpLVTypeCodeByCMW.get(dataType);}
+    public static byte getLVTypeCode(DataType dataType){return lookupUpLVTypeCodeByCMW.get(dataType);}
 
-    public static DataType getArrType(DataType dt, int dim){
+    public static DataType getArrayType(DataType dt, int dim){
             DataType dataType = null;
             if (dim == 1){
                 switch(dt){
@@ -204,11 +204,7 @@ public final class TypeLookup {
                     case DT_DATA -> dataType = DataType.DT_DATA_MULTI_ARRAY;
                 }
             }
-            else{
-                //TODO: Unsupported type
-            }
-
-            return dataType;
+        return dataType;
         }
 
 

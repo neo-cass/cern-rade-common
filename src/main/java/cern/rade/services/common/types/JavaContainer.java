@@ -3,16 +3,16 @@ package cern.rade.services.common.types;
 import cern.cmw.data.DataType;
 
 public class JavaContainer<T> {
-    protected String fieldName;
+    protected String name;
     protected T data;
     protected DataType dataType;
-    public JavaContainer(String fieldName, T data, DataType dataType)   {
-        this.fieldName = fieldName;
+    public JavaContainer(String name, T data, DataType dataType)   {
+        this.name = name;
         this.data = data;
         this.dataType = dataType;
     }
-    public String getFieldName() {
-        return fieldName;
+    public String getName() {
+        return name;
     }
 
     public T getData() {return data;}
@@ -27,7 +27,7 @@ public class JavaContainer<T> {
 
     public String toString(){
         StringBuilder strB = new StringBuilder();
-        strB.append("Name: ").append(fieldName).append("\n");
+        strB.append("Name: ").append(name).append("\n");
         strB.append("Data: ").append(data.toString()).append("\n");
         strB.append("Data Type: ").append(dataType).append("\n");
         return strB.toString();

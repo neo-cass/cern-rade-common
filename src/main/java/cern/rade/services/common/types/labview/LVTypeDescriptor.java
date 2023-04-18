@@ -2,22 +2,21 @@ package cern.rade.services.common.types.labview;
 
 public class LVTypeDescriptor {
     private LVType lvType;
-    private String fieldName;
-    public LVTypeDescriptor(LVType lvType, String fieldName){
+    private String name;
+    public LVTypeDescriptor(LVType lvType, String name){
         this.lvType = lvType;
-        this.fieldName = fieldName;
+        this.name = name;
     }
     public LVType getType() {
         return lvType;
     }
 
-    public String getFieldName() {return fieldName;}
+    public String getName() {return name;}
 
-    //TODO: correct
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Field Name: ");
-        stringBuilder.append(fieldName);
+        stringBuilder.append("Name: ");
+        stringBuilder.append(name);
         stringBuilder.append(", Type: ");
         stringBuilder.append(lvType);
         stringBuilder.append(" | ");

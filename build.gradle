@@ -3,6 +3,7 @@ plugins {
     id ('cern.devops.cbng.dependency') version "4.0.52"
     id('cern.devops.cbng.publication') version '4.0.17'
 }
+
 repositories {
     mavenCentral()
     // our package index to resolve dependencies
@@ -32,5 +33,4 @@ java {
     withSourcesJar()
 }
 
-// missing: manifest (see https://docs.gradle.org/7.4.2/userguide/building_java_projects.html#sec:jar_manifest)
 
