@@ -1,9 +1,9 @@
-package cern.rade.services.common.types;
+package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
 
-public class PropertyContainer extends JavaContainer<JavaContainer[]>{
-    public PropertyContainer(String name, JavaContainer<?>[] data, DataType dataType)   {
+public class PropertyContainer extends DataContainer<DataContainer<?>[]> {
+    public PropertyContainer(String name, DataContainer<?>[] data, DataType dataType)   {
         super(name, data, dataType);
     }
 
@@ -14,7 +14,7 @@ public class PropertyContainer extends JavaContainer<JavaContainer[]>{
         strB.append("\n---Begin Data For: ");
         strB.append(name);
         strB.append(" ---\n");
-        for (JavaContainer jc : data){
+        for (DataContainer<?> jc : data){
             strB.append(jc.toString());
             strB.append("\n");
         }

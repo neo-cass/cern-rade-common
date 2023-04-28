@@ -1,12 +1,18 @@
-package cern.rade.services.common.types;
+package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
 
-public class JavaContainer<T> {
+/**
+ * This class is made to encapsulate a field at CERN. However, it is slightly more abstract as we are using a type T
+ * This allows the container to be used for fields or for encapsulating properties with multiple fields.
+ * You can see this in {@link PropertyContainer}
+ * @param <T> The type which the container will hold
+ */
+public class DataContainer<T> {
     protected String name;
     protected T data;
     protected DataType dataType;
-    public JavaContainer(String name, T data, DataType dataType)   {
+    public DataContainer(String name, T data, DataType dataType)   {
         this.name = name;
         this.data = data;
         this.dataType = dataType;

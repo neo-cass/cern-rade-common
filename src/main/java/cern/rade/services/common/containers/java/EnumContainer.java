@@ -1,10 +1,10 @@
-package cern.rade.services.common.types;
+package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
 
 import java.util.HashMap;
 
-public class EnumContainer<T> extends JavaContainer<T> {
+public class EnumContainer<T> extends DataContainer<T> {
     private HashMap<String, Integer> enumLabels;
     public EnumContainer(String fieldName, T data, DataType dataType, HashMap<String, Integer> enumLabels) throws NoSuchMethodException {
         super (fieldName,  data,  dataType);

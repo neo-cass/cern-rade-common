@@ -4,6 +4,12 @@ plugins {
     id('cern.devops.cbng.publication') version '4.0.17'
 }
 
+configurations.all {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
 repositories {
     mavenCentral()
     // our package index to resolve dependencies
@@ -13,8 +19,8 @@ repositories {
 }
 
 dependencies {
-    implementation ("cern.cmw:cmw-data:PRO")
-    implementation ("cern.japc:japc-value:PRO")
+    implementation ("cern.cmw:cmw-data:PRO") {changing = true}
+    implementation ("cern.japc:japc-value:PRO") {changing = true}
     implementation('org.apache.commons:commons-lang3:3.12.0')
 }
 

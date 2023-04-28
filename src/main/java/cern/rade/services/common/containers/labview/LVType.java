@@ -1,4 +1,4 @@
-package cern.rade.services.common.types.labview;
+package cern.rade.services.common.containers.labview;
 public enum LVType {
      INT_8,
      INT_16,

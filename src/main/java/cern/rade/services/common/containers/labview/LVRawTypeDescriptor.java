@@ -1,4 +1,4 @@
-package cern.rade.services.common.types.labview;
+package cern.rade.services.common.containers.labview;
 
 public class LVRawTypeDescriptor {
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
