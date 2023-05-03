@@ -9,11 +9,11 @@ public class Request {
     private RequestLanguage requestLanguage;
     private int id;
 
-    public Request(ClientMetaData clientMetaData, DataContainer<?> data, String requestType, String requestLanguage)
+    public Request(ClientMetaData clientMetaData, DataContainer<?> data, String requestAction, String requestLanguage)
     {
         this.clientMetaData = clientMetaData;
         this.data=data;
-        this.requestAction = RequestAction.valueOf(requestType);
+        this.requestAction = RequestAction.valueOf(requestAction);
         this.requestLanguage = RequestLanguage.valueOf(requestLanguage);
         this.id = createID();
     }
