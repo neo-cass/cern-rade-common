@@ -1,6 +1,7 @@
 package cern.rade.services.common;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public final class BytesUtil {
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
@@ -14,18 +15,15 @@ public final class BytesUtil {
         return new String(hexChars);
     }
 
-    public static byte [] shortArrToByteArr(short [] input)
-    {
-        int index;
-        int iterations = input.length;
+    public static byte [] shortArrToByteArr(short [] input) {
+        byte[] bytes = new byte[input.length * 2];
+        ByteBuffer.wrap(bytes).asShortBuffer().put(input);
+        return bytes;
+    }
 
-        ByteBuffer bb = ByteBuffer.allocate(input.length * 2);
-
-        for(index = 0; index != iterations; ++index)
-        {
-            bb.putShort(input[index]);
-        }
-
-        return bb.array();
+    public static short [] byteArrToShortArr(byte [] input) {
+        short[] shorts = new short[input.length/2];
+        ByteBuffer.wrap(input).asShortBuffer().get(shorts);
+        return shorts;
     }
 }
