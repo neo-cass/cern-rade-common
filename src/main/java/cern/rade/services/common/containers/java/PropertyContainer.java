@@ -2,11 +2,17 @@ package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
 
+/**
+ * Encapsulates a property. In practice, a PropertyContainer is a DataContainer where the {@link DataContainer#data} is a {@link DataContainer}.
+ */
 public class PropertyContainer extends DataContainer<DataContainer<?>[]> {
     public PropertyContainer(String name, DataContainer<?>[] data, DataType dataType)   {
         super(name, data, dataType);
     }
 
+    /**
+     * @return string representation of the PropertyContainer
+     */
     public String toString(){
         StringBuilder strB = new StringBuilder();
         strB.append("Name: ").append(name).append("\n");

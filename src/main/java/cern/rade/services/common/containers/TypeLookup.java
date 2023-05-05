@@ -6,6 +6,10 @@ import cern.rade.services.common.containers.labview.LVType;
 import java.util.HashMap;
 import java.util.Map;
 import static java.util.Map.entry;
+
+/**
+ * Utility class which contains mappings of types in one form to another.
+ */
 public final class TypeLookup {
     private static final HashMap<Byte, LVType> lookupLVTypeByCode = new HashMap<Byte, LVType>( Map.ofEntries(
             entry((byte)0x01, LVType.INT_8),
@@ -193,10 +197,26 @@ public final class TypeLookup {
     }
 
     public static DataType getCMWType(LVType lvType){return lookupCMWByLVType.get(lvType);}
+
+    /**
+     *
+     * @param japcType
+     * @return
+     */
     public static DataType getCMWType(ValueType japcType){return lookupCMWByJAPCType.get(japcType);}
 
+    /**
+     * @param dataType the data type which you would like the LV type code for.
+     * @return The LV type code which the CMW data type maps to.
+     */
     public static byte getLVTypeCode(DataType dataType){return lookupUpLVTypeCodeByCMW.get(dataType);}
 
+    /**
+     *
+     * @param dt the data type of the elements in the array.
+     * @param dimension the dimension of the array.
+     * @return The CMW data type of the array, with dimension specified.
+     */
     public static DataType getCMWType(DataType dt, int dimension){
             DataType dataType = null;
             if (dimension == 1){

@@ -28,16 +28,20 @@ public class ArrayContainer<T> extends DataContainer<T[]> {
         this.elemType = elemType;
     }
     /**
-     * {@link ArrayContainer#dimensions}
+     * @return {@link ArrayContainer#dimensions}
      */
     public int[] getDimensions() {return dimensions;}
+
+    /**
+     * @param dimensions sets {@link ArrayContainer#dimensions}
+     */
     public void setDimensions(int[] dimensions) {this.dimensions = dimensions;}
     /**
-     * {@link ArrayContainer#elemName}
+     * @return {@link ArrayContainer#elemName}
      */
     public String getElemName() {return elemName;}
     /**
-     * {@link ArrayContainer#elemType}
+     * @return {@link ArrayContainer#elemType}
      */
     public DataType getElemType() {return elemType;}
 
