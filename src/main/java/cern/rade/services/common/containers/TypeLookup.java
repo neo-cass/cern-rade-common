@@ -11,7 +11,7 @@ import static java.util.Map.entry;
  * Utility class which contains mappings of types in one form to another.
  */
 public final class TypeLookup {
-    private static final HashMap<Byte, LVType> lookupLVTypeByCode = new HashMap<Byte, LVType>( Map.ofEntries(
+    private static final HashMap<Byte, LVType> lookupLVTypeByCode = new HashMap<>( Map.ofEntries(
             entry((byte)0x01, LVType.INT_8),
             entry((byte)0x02, LVType.INT_16),
             entry((byte)0x03, LVType.INT_32),
@@ -83,7 +83,7 @@ public final class TypeLookup {
 //
 //    ));
 
-    private static final HashMap<DataType, Byte> lookupUpLVTypeCodeByCMW = new HashMap<DataType, Byte>( Map.ofEntries(
+    private static final HashMap<DataType, Byte> lookupUpLVTypeCodeByCMW = new HashMap<>( Map.ofEntries(
             entry(DataType.DT_BYTE, (byte)0x01),
             entry(DataType.DT_BOOL, (byte)0x21),
             entry(DataType.DT_SHORT, (byte)0x02),
@@ -122,7 +122,7 @@ public final class TypeLookup {
             entry(DataType.DT_DATA, (byte)0x50)
     ));
 
-    private static final HashMap<LVType, DataType> lookupCMWByLVType = new HashMap<LVType, DataType>( Map.ofEntries(
+    private static final HashMap<LVType, DataType> lookupCMWByLVType = new HashMap<>( Map.ofEntries(
             entry(LVType.INT_8, DataType.DT_BYTE),
             entry(LVType.INT_16, DataType.DT_SHORT),
             entry(LVType.INT_32, DataType.DT_INT),
@@ -158,7 +158,7 @@ public final class TypeLookup {
 //entry(LVType.UNKNOWN,Data_Type.DT_BYTE)
     ));
 
-    private static final HashMap<ValueType, DataType> lookupCMWByJAPCType = new HashMap<ValueType, DataType>( Map.ofEntries(
+    private static final HashMap<ValueType, DataType> lookupCMWByJAPCType = new HashMap<>( Map.ofEntries(
             entry(ValueType.BYTE, DataType.DT_BYTE),
             entry(ValueType.SHORT, DataType.DT_SHORT),
             entry(ValueType.INT, DataType.DT_INT),
@@ -196,12 +196,15 @@ public final class TypeLookup {
         return lookupLVTypeByCode.get(typeCode);
     }
 
+    /**
+     * @param lvType the LV type which you would like the corresponding CMW data type for.
+     * @return The CMW data type which corresponds to the LV type.
+     */
     public static DataType getCMWType(LVType lvType){return lookupCMWByLVType.get(lvType);}
 
     /**
-     *
-     * @param japcType
-     * @return
+     * @param japcType the japc type which you would like the corresponding CMW data type for.
+     * @return the CMW data type which corresponds to the japc type.
      */
     public static DataType getCMWType(ValueType japcType){return lookupCMWByJAPCType.get(japcType);}
 
