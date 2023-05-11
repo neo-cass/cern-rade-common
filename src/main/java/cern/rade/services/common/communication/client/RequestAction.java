@@ -4,6 +4,7 @@ public enum RequestAction {
     GET("GET"),
     GET_SECURE("GET_SECURE"),
     SET("SET"),
+    SET_SECURE("SET_SECURE"),
     SUBSCRIBE("SUBSCRIBE");
     private String name;
     RequestAction(String name){

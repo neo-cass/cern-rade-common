@@ -1,6 +1,12 @@
 package cern.rade.services.common.communication.client;
 
+import com.google.gson.JsonObject;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.Arrays;
+import java.util.List;
+
+import static org.apache.commons.lang3.ArrayUtils.toArray;
 
 public class ClientMetaData {
     private String username;
@@ -30,7 +36,18 @@ public class ClientMetaData {
         this.type_descriptor = type_descriptor;
     }
 
-
+//    public ClientMetaData(JsonObject jsonObject)
+//    {
+//        this.username= jsonObject.get("username").getAsString();
+//        this.password=jsonObject.get("password").getAsString();
+//        this.request_action = jsonObject.get("request_action").getAsString();
+//        this.request_language = jsonObject.get("request_language").getAsString();
+//        this.selector=jsonObject.get("selector").getAsString();
+//        this.device=jsonObject.get("device").getAsString();
+//        this.property=jsonObject.get("property").getAsString();
+//
+//        this.type_descriptor = ArrayUtils.toPrimitive(((List<Short>)(List<?>)jsonObject.getAsJsonArray("type_descriptor").asList()).toArray(new Short[0]));
+//    }
 
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();

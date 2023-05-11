@@ -12,7 +12,7 @@ public class Request {
     public Request(ClientMetaData clientMetaData, DataContainer<?> data, String requestAction, String requestLanguage)
     {
         this.clientMetaData = clientMetaData;
-        this.data=data;
+        this.data = data;
         this.requestAction = RequestAction.valueOf(requestAction);
         this.requestLanguage = RequestLanguage.valueOf(requestLanguage);
         this.id = createID();
