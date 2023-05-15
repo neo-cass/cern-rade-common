@@ -34,8 +34,8 @@ public class MetaData {
         return jsonObject.get("device").getAsString();
     }
 
-    public String getProperty() {
-        return jsonObject.get("property").getAsString();
+    public int getProperty() {
+        return jsonObject.get("property").getAsInt();
     }
 
     public String getRbac_id() {
