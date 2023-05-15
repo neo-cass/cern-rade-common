@@ -38,6 +38,10 @@ public class MetaData {
         return jsonObject.get("property").getAsString();
     }
 
+    public String getRbac_id() {
+        return jsonObject.get("rbac_id").getAsString();
+    }
+
     public short[] getType_descriptor() {
         JsonArray arr = jsonObject.get("type_descriptor").getAsJsonArray();
         short[] type_descriptor = new short[arr.size()];
