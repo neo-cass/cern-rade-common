@@ -34,12 +34,12 @@ public class MetaData {
         return jsonObject.get("device").getAsString();
     }
 
-    public int getProperty() {
-        return jsonObject.get("property").getAsInt();
+    public String getProperty() {
+        return jsonObject.get("property").getAsString();
     }
 
-    public String getRbac_id() {
-        return jsonObject.get("rbac_id").getAsString();
+    public int getRbac_id() {
+        return jsonObject.get("rbac_id").getAsInt();
     }
 
     public short[] getType_descriptor() {
