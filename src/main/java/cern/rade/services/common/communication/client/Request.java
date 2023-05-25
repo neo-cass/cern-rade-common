@@ -7,14 +7,16 @@ public class Request {
     private DataContainer<?> data;
     private RequestAction requestAction;
     private RequestLanguage requestLanguage;
+    private AuthenticationType authenticationType;
     private int id;
 
-    public Request(MetaData metaData, DataContainer<?> data, String requestAction, String requestLanguage)
+    public Request(MetaData metaData, DataContainer<?> data)
     {
         this.metaData = metaData;
         this.data = data;
-        this.requestAction = RequestAction.valueOf(requestAction);
-        this.requestLanguage = RequestLanguage.valueOf(requestLanguage);
+        this.requestAction = RequestAction.valueOf(metaData.getRequest_action());
+        this.requestLanguage = RequestLanguage.valueOf(metaData.getRequest_language());
+        this.authenticationType = AuthenticationType.valueOf(metaData.getAuth_type());
         this.id = createID();
     }
 
@@ -58,5 +60,9 @@ public class Request {
 
     public RequestLanguage getRequestLanguage() {
         return requestLanguage;
+    }
+
+    public AuthenticationType getAuthenticationType() {
+        return authenticationType;
     }
 }
