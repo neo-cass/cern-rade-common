@@ -1,5 +1,6 @@
 package cern.rade.services.common.communication.client;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -48,6 +49,10 @@ public class MetaData {
     }
     public String getAuth_type() {
         return jsonObject.get("auth_type").getAsString();
+    }
+    public String flatten(){
+        Gson gson = new Gson();
+        return gson.toJson(jsonObject);
     }
 
     public short[] getType_descriptor() {
