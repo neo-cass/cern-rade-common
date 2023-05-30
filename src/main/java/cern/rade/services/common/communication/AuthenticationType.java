@@ -1,4 +1,4 @@
-package cern.rade.services.common.communication.client;
+package cern.rade.services.common.communication;
 
 public enum AuthenticationType {
     SECURE("SECURE"),

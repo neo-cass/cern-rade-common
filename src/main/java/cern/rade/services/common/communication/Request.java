@@ -1,4 +1,4 @@
-package cern.rade.services.common.communication.client;
+package cern.rade.services.common.communication;
 
 import cern.rade.services.common.containers.java.DataContainer;
 

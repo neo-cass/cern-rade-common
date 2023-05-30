@@ -1,4 +1,4 @@
-package cern.rade.services.common.communication.client;
+package cern.rade.services.common.communication;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
