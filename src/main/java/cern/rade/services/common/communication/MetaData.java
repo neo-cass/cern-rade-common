@@ -75,6 +75,7 @@ public class MetaData {
     public void setAcq_stamp(long acq_stamp){
         jsonObject.add("acq_stamp", new JsonPrimitive(acq_stamp));
     }
+
     public void setRbac_id(int rbac_id){
         jsonObject.add("rbac_id", new JsonPrimitive(rbac_id));
     }
