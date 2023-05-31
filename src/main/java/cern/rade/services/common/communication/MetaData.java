@@ -1,9 +1,6 @@
 package cern.rade.services.common.communication;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 
 public class MetaData {
     private JsonObject jsonObject;
@@ -16,40 +13,57 @@ public class MetaData {
         this.jsonObject = new JsonObject();
     }
 
+    private String getString(String name){
+        JsonElement element = jsonObject.get(name);
+        if (element==null){
+            return null;
+        }
+        else{
+            return element.getAsString();
+        }
+    }
+
+    private int getInt(String name){
+        JsonElement element = jsonObject.get(name);
+        if (element==null){
+            return 0;
+        }
+        else{
+            return element.getAsInt();
+        }
+    }
+
     public String getUsername() {
-        return jsonObject.get("username").getAsString();
+        return getString("username");
     }
-
     public String getPassword() {
-        return jsonObject.get("password").getAsString();
+        return getString("password");
     }
-
     public String getRequest_action() {
-        return jsonObject.get("request_action").getAsString();
+        return getString("req_action");
     }
-
     public String getRequest_language() {
-        return jsonObject.get("request_language").getAsString();
+        return getString("req_lang");
     }
-
     public String getSelector() {
-        return jsonObject.get("selector").getAsString();
+        return getString("selector");
     }
-
     public String getDevice() {
-        return jsonObject.get("device").getAsString();
+        return getString("device");
     }
-
     public String getProperty() {
-        return jsonObject.get("property").getAsString();
+        return getString("property");
     }
-
     public int getRbac_id() {
-        return jsonObject.get("rbac_id").getAsInt();
+        return getInt("rbac_id");
+    }
+    public int getSub_id() {
+        return getInt("sub_id");
     }
     public String getAuth_type() {
-        return jsonObject.get("auth_type").getAsString();
+        return getString("auth_type");
     }
+
     public String flatten(){
         Gson gson = new Gson();
         return gson.toJson(jsonObject);
@@ -57,12 +71,27 @@ public class MetaData {
 
     public short[] getType_descriptor() {
         JsonArray arr = jsonObject.getAsJsonArray("type_descriptor");
+        if (arr == null){
+            return null;
+        }
         short[] type_descriptor = new short[arr.size()];
         for (int i = 0; i < arr.size(); i++) {
             type_descriptor[i] = arr.get(i).getAsShort();
         }
         return type_descriptor;
     }
+    public byte[] getRbac_token() {
+        JsonArray arr = jsonObject.getAsJsonArray("rbac_token");
+        if (arr == null){
+            return null;
+        }
+        byte[] type_descriptor = new byte[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            type_descriptor[i] = arr.get(i).getAsByte();
+        }
+        return type_descriptor;
+    }
+
 
     public void setType_descriptor(short [] type_descriptor) {
         JsonArray arr = new JsonArray();
