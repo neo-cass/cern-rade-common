@@ -11,7 +11,7 @@ public class ArrayContainer<T> extends DataContainer<T[]> {
      * with the first dimesniosn being 3 long and the second being 4 long, this array would be [3,4]
      * dimensions.length is the dimension of the array
      */
-    private int[] dimensions;
+    private int[] dimensionLens;
 
     /**
      * elemName is strictly here because of LabVIEW. In LabVIEW each element has a label, however these are all the same
@@ -23,19 +23,25 @@ public class ArrayContainer<T> extends DataContainer<T[]> {
     private DataType elemType;
     public ArrayContainer(String name, String elemName, T[] data, int[] dimensions, DataType dataType, DataType elemType)   {
         super(name, data, dataType);
-        this.dimensions = dimensions;
+        this.dimensionLens = dimensions;
+        this.elemName = elemName;
+        this.elemType = elemType;
+    }
+    public ArrayContainer(String name, String elemName, int[] dimensions, DataType dataType, DataType elemType)   {
+        super(name, dataType);
+        this.dimensionLens = dimensions;
         this.elemName = elemName;
         this.elemType = elemType;
     }
     /**
-     * @return {@link ArrayContainer#dimensions}
+     * @return {@link ArrayContainer#dimensionLens}
      */
-    public int[] getDimensions() {return dimensions;}
+    public int[] getDimensions() {return dimensionLens;}
 
     /**
-     * @param dimensions sets {@link ArrayContainer#dimensions}
+     * @param dimensions sets {@link ArrayContainer#dimensionLens}
      */
-    public void setDimensions(int[] dimensions) {this.dimensions = dimensions;}
+    public void setDimensions(int[] dimensions) {this.dimensionLens = dimensions;}
     /**
      * @return {@link ArrayContainer#elemName}
      */

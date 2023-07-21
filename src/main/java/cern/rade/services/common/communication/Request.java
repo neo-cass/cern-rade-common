@@ -22,26 +22,49 @@ public class Request {
 
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[ID: ");
+        stringBuilder.append(id);
+        stringBuilder.append(" | ");
 
-        stringBuilder.append("meta data: ");
-        stringBuilder.append(metaData);
-        stringBuilder.append("\n");
-
-        stringBuilder.append("data: ");
+        stringBuilder.append("Data: ");
         stringBuilder.append(data);
-        stringBuilder.append("\n");
+        stringBuilder.append(" | ");
+
+        stringBuilder.append("User: ");
+        stringBuilder.append(metaData.getUsername());
+        stringBuilder.append(" | ");
+
+        stringBuilder.append("Action: ");
+        stringBuilder.append(metaData.getRequest_action());
+        stringBuilder.append(" | ");
+
+        stringBuilder.append("Language: ");
+        stringBuilder.append(metaData.getRequest_language());
+        stringBuilder.append(" | ");
+
+        stringBuilder.append("Device: ");
+        stringBuilder.append(metaData.getDevice());
+        stringBuilder.append(" | ");
+
+        stringBuilder.append("Property: ");
+        stringBuilder.append(metaData.getProperty());
+        stringBuilder.append(" | ");
+
+        stringBuilder.append("Selector: ");
+        stringBuilder.append(metaData.getSelector());
+        stringBuilder.append(" | ");
+
+        stringBuilder.append("Authentication: ");
+        stringBuilder.append(metaData.getAuth_type());
+
+        stringBuilder.append("]");
+
+
 
         return stringBuilder.toString();
     }
     private int createID(){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(metaData.getUsername()).append("/");
-        stringBuilder.append(metaData.getDevice()).append("/");
-        stringBuilder.append(metaData.getProperty()).append("/");
-        stringBuilder.append(metaData.getRequest_action()).append("/");
-        stringBuilder.append(metaData.getRequest_language()).append("/");
-        stringBuilder.append(metaData.getSelector());
-        return stringBuilder.toString().hashCode();
+        return this.hashCode();
     }
     public MetaData getMetaData() {
         return metaData;

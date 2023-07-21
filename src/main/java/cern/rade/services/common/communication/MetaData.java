@@ -109,4 +109,10 @@ public class MetaData {
         jsonObject.add("rbac_id", new JsonPrimitive(rbac_id));
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(jsonObject.toString());
+        return stringBuilder.toString();
+    }
 }

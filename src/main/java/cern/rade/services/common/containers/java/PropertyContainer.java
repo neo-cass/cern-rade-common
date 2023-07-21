@@ -10,6 +10,10 @@ public class PropertyContainer extends DataContainer<DataContainer<?>[]> {
         super(name, data, dataType);
     }
 
+    public PropertyContainer(String name, DataType dataType)   {
+        super(name, dataType);
+    }
+
     /**
      * @return string representation of the PropertyContainer
      */

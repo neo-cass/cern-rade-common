@@ -27,6 +27,11 @@ public class DataContainer<T> {
         this.dataType = dataType;
     }
 
+    public DataContainer(String name, DataType dataType)   {
+        this.name = name;
+        this.dataType = dataType;
+    }
+
     /**
      * @return {@link DataContainer#name}
      */
