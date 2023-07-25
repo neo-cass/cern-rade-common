@@ -5,8 +5,8 @@ import cern.cmw.data.DataType;
 /**
  * Encapsulates a property. In practice, a PropertyContainer is a DataContainer where the {@link DataContainer#data} is a {@link DataContainer}.
  */
-public class PropertyContainer extends DataContainer<DataContainer<?>[]> {
-    public PropertyContainer(String name, DataContainer<?>[] data, DataType dataType)   {
+public class PropertyContainer extends DataContainer<DataContainer<Object>[]> {
+    public PropertyContainer(String name, DataContainer<Object>[] data, DataType dataType)   {
         super(name, data, dataType);
     }
 
