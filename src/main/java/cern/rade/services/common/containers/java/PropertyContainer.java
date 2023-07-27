@@ -13,6 +13,9 @@ public class PropertyContainer extends DataContainer<DataContainer<Object>[]> {
     public PropertyContainer(String name, DataType dataType)   {
         super(name, dataType);
     }
+    public void setField(int i, DataContainer<Object> field){
+        data[i] = field;
+    }
 
     /**
      * @return string representation of the PropertyContainer
