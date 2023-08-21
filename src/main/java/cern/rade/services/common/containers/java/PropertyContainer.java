@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 /**
  * Encapsulates a property. In practice, a PropertyContainer is a DataContainer where the {@link DataContainer#data} is a {@link DataContainer}.
  */
-public class PropertyContainer extends DataContainer{
+public class PropertyContainer extends DataContainer implements Cloneable{
     private LinkedHashMap<String, DataContainer> data;
     public PropertyContainer(String name)   {
         super(name);
@@ -57,6 +57,14 @@ public class PropertyContainer extends DataContainer{
     public void setProperty(String name, PropertyContainer field){
         data.put(name, field);
     }
+    public void setDataContainer(String name, DataContainer field){
+        data.put(name, field);
+        field.setName(null);
+    }
+    public void setDataContainer(DataContainer field){
+        data.put(field.getName(), field);
+        field.setName(null);
+    }
 
     public DataContainer getField(String name){
         return data.get(name);
@@ -77,5 +85,14 @@ public class PropertyContainer extends DataContainer{
         strB.append(name);
         strB.append(" ---\n");
         return strB.toString();
+    }
+
+    @Override
+    public PropertyContainer clone() {
+        PropertyContainer clone = new PropertyContainer(name);
+        clone.setData(((LinkedHashMap<String, DataContainer>)this.data).clone());
+
+
+
     }
 }
