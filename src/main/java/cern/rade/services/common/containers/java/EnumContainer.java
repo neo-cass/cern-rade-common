@@ -4,9 +4,9 @@ import cern.cmw.data.DataType;
 
 import java.util.HashMap;
 
-public class EnumContainer<T> extends DataContainer<T> {
+public class EnumContainer extends DataContainer {
     private HashMap<String, Integer> enumLabels;
-    public EnumContainer(String fieldName, T data, DataType dataType, HashMap<String, Integer> enumLabels) throws NoSuchMethodException {
+    public EnumContainer(String fieldName, Object data, DataType dataType, HashMap<String, Integer> enumLabels) throws NoSuchMethodException {
         super (fieldName,  data,  dataType);
         this.enumLabels = enumLabels;
     }

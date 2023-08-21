@@ -4,13 +4,13 @@ import cern.rade.services.common.containers.java.DataContainer;
 
 public class Request {
     private MetaData metaData;
-    private DataContainer<?> data;
+    private DataContainer data;
     private RequestAction requestAction;
     private RequestLanguage requestLanguage;
     private AuthenticationType authenticationType;
     private int id;
 
-    public Request(MetaData metaData, DataContainer<?> data)
+    public Request(MetaData metaData, DataContainer data)
     {
         this.metaData = metaData;
         this.data = data;
@@ -70,7 +70,7 @@ public class Request {
         return metaData;
     }
 
-    public DataContainer<?> getData() {
+    public DataContainer getData() {
         return data;
     }
     public int getId() {
