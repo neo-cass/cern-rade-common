@@ -6,9 +6,8 @@ import java.util.HashMap;
 
 public class EnumContainer extends DataContainer {
     private HashMap<String, Integer> enumLabels;
-    public EnumContainer(String fieldName, Object data, DataType dataType, HashMap<String, Integer> enumLabels) throws NoSuchMethodException {
-        super (fieldName,  data,  dataType);
-        this.enumLabels = enumLabels;
+    public EnumContainer(String fieldName) {
+        super (fieldName);
     }
     public HashMap<String, Integer> getEnumLabels() {
         return enumLabels;
