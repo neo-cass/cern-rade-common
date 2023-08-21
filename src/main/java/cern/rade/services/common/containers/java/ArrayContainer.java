@@ -41,6 +41,7 @@ public class ArrayContainer extends DataContainer {
      * @return {@link ArrayContainer#elemName}
      */
     public String getElemName() {return elemName;}
+    public void setElemName() {this.elemName=elemName;}
     /**
      * @return {@link ArrayContainer#elemType}
      */
