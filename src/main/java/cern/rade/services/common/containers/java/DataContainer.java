@@ -7,7 +7,7 @@ import cern.cmw.data.DataType;
  * This allows the container to be used for fields or for encapsulating properties with multiple fields.
  * You can see this in {@link PropertyContainer}.
  */
-public class DataContainer implements Cloneable{
+public class DataContainer{
     /**
      * name is the name of the field or property which this DataContainer encapsulates.
      */
@@ -88,9 +88,4 @@ public class DataContainer implements Cloneable{
         return strB.toString();
     }
 
-    @Override
-    public DataContainer clone() {
-        DataContainer clone = new DataContainer(name);
-        clone.setData(this.data);
-    }
 }

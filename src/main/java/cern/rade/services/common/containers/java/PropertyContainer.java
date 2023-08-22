@@ -3,6 +3,7 @@ package cern.rade.services.common.containers.java;
 import cern.cmw.data.DataType;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Encapsulates a property. In practice, a PropertyContainer is a DataContainer where the {@link DataContainer#data} is a {@link DataContainer}.
@@ -22,15 +23,16 @@ public class PropertyContainer extends DataContainer implements Cloneable{
     public void setSimple(String name, Object field){
         DataContainer curField = data.get(name);
         if(curField==null){
-            curField = new DataContainer();
+            curField = new DataContainer(name);
             data.put(name, curField);
         }
         curField.setData(field);
     }
+
     public void setArray(String name, Object[] array){
         ArrayContainer curField = (ArrayContainer) data.get(name);
         if(curField==null){
-            curField = new ArrayContainer();
+            curField = new ArrayContainer(name);
             data.put(name, curField);
         }
         curField.setData(array);
@@ -39,7 +41,7 @@ public class PropertyContainer extends DataContainer implements Cloneable{
     public void setArray(String name, Object[] array, int[] dimensions){
         ArrayContainer curField = (ArrayContainer) data.get(name);
         if(curField==null){
-            curField = new ArrayContainer();
+            curField = new ArrayContainer(name);
             data.put(name, curField);
         }
         curField.setData(array, dimensions);
@@ -59,15 +61,17 @@ public class PropertyContainer extends DataContainer implements Cloneable{
     }
     public void setDataContainer(String name, DataContainer field){
         data.put(name, field);
-        field.setName(null);
     }
+
     public void setDataContainer(DataContainer field){
         data.put(field.getName(), field);
-        field.setName(null);
     }
 
     public DataContainer getField(String name){
         return data.get(name);
+    }
+    public LinkedHashMap<String, DataContainer> getData(){
+        return this.data;
     }
 
     /**
@@ -90,9 +94,19 @@ public class PropertyContainer extends DataContainer implements Cloneable{
     @Override
     public PropertyContainer clone() {
         PropertyContainer clone = new PropertyContainer(name);
-        clone.setData(((LinkedHashMap<String, DataContainer>)this.data).clone());
-
-
-
+        for(Map.Entry<String, DataContainer> entry : data.entrySet()){
+            DataContainer val = entry.getValue();
+            String key = entry.getKey();
+            if(val instanceof ArrayContainer){
+                clone.setDataContainer(key, new ArrayContainer(key));
+            }
+            else if(val instanceof PropertyContainer){
+                clone.setProperty(key, ((PropertyContainer) val).clone());
+            }
+            else {
+                clone.setDataContainer(key, new DataContainer(key));
+            }
+        }
+        return clone;
     }
 }

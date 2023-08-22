@@ -24,6 +24,10 @@ public class ArrayContainer extends DataContainer {
     public ArrayContainer(String name){
         this.name= name;
     }
+    public ArrayContainer(String name, String elemName){
+        this.name= name;
+        this.elemName = elemName;
+    }
     public ArrayContainer()   {
         super();
     }
@@ -46,6 +50,9 @@ public class ArrayContainer extends DataContainer {
      * @return {@link ArrayContainer#elemType}
      */
     public DataType getElemType() {return elemType;}
+    public Object[] getData(){
+        return this.data;
+    }
     //TODO: consider making a map type to map the array type to the elem type
     public void setData(Object[] data) {
         this.data = data;
@@ -74,6 +81,7 @@ public class ArrayContainer extends DataContainer {
             //TODO: create exception
             throw new RuntimeException();
         }
+        this.dimensionLens = new int[]{data.length};
     }
 
     public void setData(Object[] data, int[] dimensionLens) {
