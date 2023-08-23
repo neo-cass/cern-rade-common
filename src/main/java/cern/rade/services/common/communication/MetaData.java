@@ -26,7 +26,7 @@ public class MetaData {
     private int getInt(String name){
         JsonElement element = jsonObject.get(name);
         if (element==null){
-            return 0;
+            return -1;
         }
         else{
             return element.getAsInt();
@@ -107,6 +107,9 @@ public class MetaData {
 
     public void setRbac_id(int rbac_id){
         jsonObject.add("rbac_id", new JsonPrimitive(rbac_id));
+    }
+    public String getReq_url(){
+        return getString("req_url");
     }
 
     @Override
