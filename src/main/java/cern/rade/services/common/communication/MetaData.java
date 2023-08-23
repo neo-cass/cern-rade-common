@@ -39,11 +39,11 @@ public class MetaData {
     public String getPassword() {
         return getString("password");
     }
-    public String getRequest_action() {
-        return getString("req_action");
+    public RequestAction getRequest_action() {
+        return RequestAction.valueOf(getString("req_action"));
     }
-    public String getRequest_language() {
-        return getString("req_lang");
+    public RequestLanguage getRequest_language() {
+        return RequestLanguage.valueOf(getString("req_lang"));
     }
     public String getSelector() {
         return getString("selector");
@@ -60,8 +60,8 @@ public class MetaData {
     public int getSub_id() {
         return getInt("sub_id");
     }
-    public String getAuth_type() {
-        return getString("auth_type");
+    public AuthenticationType getAuth_type() {
+        return AuthenticationType.valueOf(getString("auth_type"));
     }
 
     public String flatten(){

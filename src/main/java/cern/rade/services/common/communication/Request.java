@@ -14,9 +14,9 @@ public class Request {
     {
         this.metaData = metaData;
         this.data = data;
-        this.requestAction = RequestAction.valueOf(metaData.getRequest_action());
-        this.requestLanguage = RequestLanguage.valueOf(metaData.getRequest_language());
-        this.authenticationType = AuthenticationType.valueOf(metaData.getAuth_type());
+        this.requestAction =metaData.getRequest_action();
+        this.requestLanguage = metaData.getRequest_language();
+        this.authenticationType = metaData.getAuth_type();
         this.id = createID();
     }
 
