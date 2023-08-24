@@ -46,8 +46,8 @@ public class Request {
         stringBuilder.append(metaData.getDevice());
         stringBuilder.append(" | ");
 
-        stringBuilder.append("Property: ");
-        stringBuilder.append(metaData.getProperty());
+        stringBuilder.append("URL: ");
+        stringBuilder.append(metaData.getReq_url());
         stringBuilder.append(" | ");
 
         stringBuilder.append("Selector: ");
