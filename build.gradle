@@ -1,36 +1,32 @@
 plugins {
-    id 'java-library'
+    id "java-library"
     id ('cern.devops.cbng.dependency') version "4.0.52"
-    id('cern.devops.cbng.publication') version '4.0.17'
+    id("cern.devops.cbng.publication") version "4.0.17"
 }
 
 configurations.all {
-    resolutionStrategy {
-        cacheChangingModulesFor 0, 'seconds'
-    }
+    resolutionStrategy.cacheChangingModulesFor(0, "seconds")
 }
 
 repositories {
     mavenCentral()
     // our package index to resolve dependencies
     maven {
-        url 'https://artifactory.cern.ch/release'
+        url = "https://artifactory.cern.ch/release"
     }
 }
 
 dependencies {
     implementation ("cern.cmw:cmw-data:PRO") {changing = true}
     implementation ("cern.japc:japc-value:PRO") {changing = true}
-    implementation('org.apache.commons:commons-lang3:3.12.0')
+    implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation ("com.google.code.gson:gson:2.10.1")
-
 }
 
 jar {
-    destinationDirectory.set(file("$projectDir/jar-build"))
-    manifest {
-        attributes("Implementation-Title": "common", "Implementation-Version": archiveVersion)
-    }
+    archiveFileName = project.property('jarName')
+    from file("$buildDir/libs/$jar")
+    getDestinationDirectory().set(file("."))
 }
 
 // requirement for building this project
