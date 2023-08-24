@@ -51,9 +51,9 @@ public class MetaData {
     public String getDevice() {
         return getString("device");
     }
-    public String getProperty() {
-        return getString("property");
-    }
+//    public String getProperty() {
+//        return getString("property");
+//    }
     public int getRbac_id() {
         return getInt("rbac_id");
     }
