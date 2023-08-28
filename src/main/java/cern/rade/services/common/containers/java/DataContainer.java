@@ -83,7 +83,7 @@ public class DataContainer{
     public String toString(){
         StringBuilder strB = new StringBuilder();
         strB.append("Name: ").append(name).append(" | ");
-        strB.append("Data: ").append(data.toString()).append(" | ");
+        if(data!=null){strB.append("Data: ").append(data.toString()).append(" | ");}
         strB.append("Type: ").append(dataType).append("\n");
         return strB.toString();
     }
