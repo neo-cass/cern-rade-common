@@ -11,8 +11,7 @@ import java.util.Map;
 public class PropertyContainer extends DataContainer implements Cloneable{
     private LinkedHashMap<String, DataContainer> data;
     public PropertyContainer(String name)   {
-        super(name);
-        dataType = DataType.DT_DATA;
+        super(name, DataType.DT_DATA);
         data = new LinkedHashMap<>();
     }
     public PropertyContainer()   {
@@ -50,7 +49,7 @@ public class PropertyContainer extends DataContainer implements Cloneable{
     public void setArray(String name, Object[] array, int dim1, int dim2){
         ArrayContainer curField = (ArrayContainer) data.get(name);
         if(curField==null){
-            curField = new ArrayContainer();
+            curField = new ArrayContainer(name);
             data.put(name, curField);
         }
         curField.setData(array, dim1, dim2);
@@ -61,10 +60,6 @@ public class PropertyContainer extends DataContainer implements Cloneable{
     }
     public void setDataContainer(String name, DataContainer field){
         data.put(name, field);
-    }
-
-    public void setDataContainer(DataContainer field){
-        data.put(field.getName(), field);
     }
 
     public DataContainer getField(String name){

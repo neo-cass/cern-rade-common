@@ -23,6 +23,10 @@ public class DataContainer{
     public DataContainer(String name)   {
         this.name = name;
     }
+    public DataContainer(String name, DataType type)   {
+        this.name = name;
+        this.dataType = type;
+    }
     public DataContainer()   {
     }
 
