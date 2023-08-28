@@ -40,28 +40,44 @@ public class MetaData {
         return getString("password");
     }
     public RequestAction getRequest_action() {
-        return RequestAction.valueOf(getString("req_action"));
+        String req_action = getString("req_action");
+        if (req_action != null) {
+            return RequestAction.valueOf(req_action);
+        }
+        else{
+            return null;
+        }
     }
     public RequestLanguage getRequest_language() {
-        return RequestLanguage.valueOf(getString("req_lang"));
+        String req_lang = getString("req_lang");
+        if (req_lang != null) {
+            return RequestLanguage.valueOf(req_lang);
+        }
+        else{
+            return null;
+        }
     }
+    public AuthenticationType getAuth_type() {
+        String auth_type = getString("auth_type");
+        if (auth_type != null) {
+            return AuthenticationType.valueOf(auth_type);
+        }
+        else{
+            return null;
+        }
+    }
+
     public String getSelector() {
         return getString("selector");
     }
     public String getDevice() {
         return getString("device");
     }
-//    public String getProperty() {
-//        return getString("property");
-//    }
     public int getRbac_id() {
         return getInt("rbac_id");
     }
     public int getSub_id() {
         return getInt("sub_id");
-    }
-    public AuthenticationType getAuth_type() {
-        return AuthenticationType.valueOf(getString("auth_type"));
     }
 
     public String flatten(){
