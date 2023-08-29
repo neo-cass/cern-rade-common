@@ -122,6 +122,9 @@ public class MetaData {
     public void setRbac_id(int rbac_id){
         jsonObject.add("rbac_id", new JsonPrimitive(rbac_id));
     }
+    public void setError(String error){
+        jsonObject.add("error", new JsonPrimitive(error));
+    }
     public String getReq_url(){
         return getString("req_url");
     }
