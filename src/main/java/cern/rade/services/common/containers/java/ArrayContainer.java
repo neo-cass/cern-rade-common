@@ -22,10 +22,17 @@ public class ArrayContainer extends DataContainer {
      */
     private DataType elemType;
     public ArrayContainer(String name){
-        this.name= name;
+        super(name);
+    }
+    public ArrayContainer(String name, DataType type){
+        super(name, type);
     }
     public ArrayContainer(String name, String elemName){
-        this.name= name;
+        super(name);
+        this.elemName = elemName;
+    }
+    public ArrayContainer(String name, String elemName, DataType type){
+        super(name, type);
         this.elemName = elemName;
     }
     public ArrayContainer()   {
@@ -40,7 +47,9 @@ public class ArrayContainer extends DataContainer {
     /**
      * @param dimensions sets {@link ArrayContainer#dimensionLens}
      */
-    public void setDimensions(int[] dimensions) {this.dimensionLens = dimensions;}
+    public void setDimensions(int[] dimensions) {
+        this.dimensionLens = dimensions;
+    }
     /**
      * @return {@link ArrayContainer#elemName}
      */
@@ -53,6 +62,7 @@ public class ArrayContainer extends DataContainer {
     public Object[] getData(){
         return this.data;
     }
+
     //TODO: consider making a map type to map the array type to the elem type
     public void setData(Object[] data) {
         this.data = data;
@@ -78,8 +88,7 @@ public class ArrayContainer extends DataContainer {
             dataType = DataType.DT_STRING_ARRAY;
             elemType = DataType.DT_STRING;
         } else {
-            //TODO: create exception
-            throw new RuntimeException();
+            throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
         }
         this.dimensionLens = new int[]{data.length};
     }
@@ -109,8 +118,7 @@ public class ArrayContainer extends DataContainer {
             dataType = DataType.DT_STRING_MULTI_ARRAY;
             elemType = DataType.DT_STRING;
         } else {
-            //TODO: create exception
-            throw new RuntimeException();
+            throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
         }
     }
 
@@ -139,8 +147,7 @@ public class ArrayContainer extends DataContainer {
             dataType = DataType.DT_STRING_ARRAY_2D;
             elemType = DataType.DT_STRING;
         } else {
-            //TODO: create exception
-            throw new RuntimeException();
+            throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
         }
     }
 

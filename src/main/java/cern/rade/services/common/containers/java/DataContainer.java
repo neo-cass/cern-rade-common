@@ -27,8 +27,7 @@ public class DataContainer{
         this.name = name;
         this.dataType = type;
     }
-    public DataContainer()   {
-    }
+    public DataContainer(){}
 
     /**
      * @return {@link DataContainer#name}
@@ -76,8 +75,7 @@ public class DataContainer{
             dataType = DataType.DT_STRING;
         }
         else{
-            //TODO: create exception
-            throw new RuntimeException();
+            throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
         }
     }
 

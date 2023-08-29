@@ -18,50 +18,43 @@ public class PropertyContainer extends DataContainer implements Cloneable{
         dataType = DataType.DT_DATA;
         data = new LinkedHashMap<>();
     }
-
-    public void setSimple(String name, Object field){
-        DataContainer curField = data.get(name);
-        if(curField==null){
-            curField = new DataContainer(name);
-            data.put(name, curField);
+    private ArrayContainer getOrCreateArrayField(String name){
+        ArrayContainer field = (ArrayContainer) data.get(name);
+        if(field==null){
+            field = new ArrayContainer(name);
+            data.put(name, field);
         }
-        curField.setData(field);
+        return field;
+    }
+    private DataContainer getOrCreateSimpleField(String name){
+        DataContainer field = data.get(name);
+        if(field==null){
+            field = new DataContainer(name);
+            data.put(name, field);
+        }
+        return field;
+    }
+    public void setSimple(String name, Object field){
+        getOrCreateSimpleField(name).setData(field);
     }
 
     public void setArray(String name, Object[] array){
-        ArrayContainer curField = (ArrayContainer) data.get(name);
-        if(curField==null){
-            curField = new ArrayContainer(name);
-            data.put(name, curField);
-        }
-        curField.setData(array);
+        getOrCreateArrayField(name).setData(array);
     }
 
     public void setArray(String name, Object[] array, int[] dimensions){
-        ArrayContainer curField = (ArrayContainer) data.get(name);
-        if(curField==null){
-            curField = new ArrayContainer(name);
-            data.put(name, curField);
-        }
-        curField.setData(array, dimensions);
+        getOrCreateArrayField(name).setData(array, dimensions);
     }
 
     public void setArray(String name, Object[] array, int dim1, int dim2){
-        ArrayContainer curField = (ArrayContainer) data.get(name);
-        if(curField==null){
-            curField = new ArrayContainer(name);
-            data.put(name, curField);
-        }
-        curField.setData(array, dim1, dim2);
+        getOrCreateArrayField(name).setData(array, dim1, dim2);
     }
-
     public void setProperty(String name, PropertyContainer field){
         data.put(name, field);
     }
     public void setDataContainer(String name, DataContainer field){
         data.put(name, field);
     }
-
     public DataContainer getField(String name){
         return data.get(name);
     }

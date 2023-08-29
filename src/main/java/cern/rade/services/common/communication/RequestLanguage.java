@@ -2,8 +2,7 @@ package cern.rade.services.common.communication;
 
 public enum RequestLanguage {
     LABVIEW("LABVIEW"),
-    PYTHON("PYTHON"),
-    COMMAND_LINE("COMMAND_LINE");
+    PYTHON("PYTHON");
     private String name;
     RequestLanguage(String name){
         this.name = name;

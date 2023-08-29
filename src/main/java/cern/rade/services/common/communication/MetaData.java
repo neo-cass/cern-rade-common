@@ -50,7 +50,7 @@ public class MetaData {
     }
     public RequestLanguage getRequest_language() {
         String req_lang = getString("req_lang");
-        if (req_lang != null) {
+        if (req_lang!=null) {
             return RequestLanguage.valueOf(req_lang);
         }
         else{
@@ -63,7 +63,7 @@ public class MetaData {
             return AuthenticationType.valueOf(auth_type);
         }
         else{
-            return null;
+            return AuthenticationType.NONE;
         }
     }
 
@@ -79,12 +79,10 @@ public class MetaData {
     public int getSub_id() {
         return getInt("sub_id");
     }
-
     public String flatten(){
         Gson gson = new Gson();
         return gson.toJson(jsonObject);
     }
-
     public short[] getType_descriptor() {
         JsonArray arr = jsonObject.getAsJsonArray("type_descriptor");
         if (arr == null){
@@ -107,8 +105,6 @@ public class MetaData {
         }
         return type_descriptor;
     }
-
-
     public void setType_descriptor(short [] type_descriptor) {
         JsonArray arr = new JsonArray();
         for (int i = 0; i < type_descriptor.length; i++){
@@ -120,7 +116,9 @@ public class MetaData {
     public void setAcq_stamp(long acq_stamp){
         jsonObject.add("acq_stamp", new JsonPrimitive(acq_stamp));
     }
-
+    public void setSub_id(int sub_id){
+        jsonObject.add("sub_id", new JsonPrimitive(sub_id));
+    }
     public void setRbac_id(int rbac_id){
         jsonObject.add("rbac_id", new JsonPrimitive(rbac_id));
     }
@@ -128,10 +126,17 @@ public class MetaData {
         return getString("req_url");
     }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(jsonObject.toString());
-        return stringBuilder.toString();
+    public String toString(){
+        String url;
+        if(getReq_url()==null){
+            url = getDevice();
+        }
+        else{
+            url= getReq_url();
+        }
+
+        return String.format("[user: %s | action: %s | language: %s | authentication: %s | url: %s | selector: %s]",
+                getUsername(), getRequest_action().getName(), getRequest_language().getName(),
+                getAuth_type().getName(), url, getSelector());
     }
 }
