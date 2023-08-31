@@ -41,7 +41,7 @@ public class MetaData {
     }
     public RequestAction getRequest_action() {
         String req_action = getString("req_action");
-        if (req_action != null) {
+        if (req_action != null && !req_action.equals("")) {
             return RequestAction.valueOf(req_action);
         }
         else{
@@ -50,7 +50,7 @@ public class MetaData {
     }
     public RequestLanguage getRequest_language() {
         String req_lang = getString("req_lang");
-        if (req_lang!=null) {
+        if (req_lang!=null && !req_lang.equals("")) {
             return RequestLanguage.valueOf(req_lang);
         }
         else{
@@ -59,7 +59,7 @@ public class MetaData {
     }
     public AuthenticationType getAuth_type() {
         String auth_type = getString("auth_type");
-        if (auth_type != null) {
+        if (auth_type != null && !auth_type.equals("")) {
             return AuthenticationType.valueOf(auth_type);
         }
         else{
