@@ -25,9 +25,9 @@ dependencies {
 }
 
 tasks.named<Jar>("jar") {
-    val warName = project.findProperty("jarName")
-    if(warName!=null){
-        archiveFileName.set(warName as String)
+    val jarName = project.findProperty("jarName")
+    if(jarName!=null){
+        archiveFileName.set(jarName as String)
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

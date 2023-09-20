@@ -1,14 +1,13 @@
 variables:
   JAR_NAME: "common-$CI_COMMIT_REF_SLUG.jar"
 
-
 build_jar:
   image:
     name: eclipse-temurin:17-alpine
   artifacts:
     name: "$JAR_NAME"
     paths:
-      - "$CI_PROJECT_DIR/build/libs/$JAR_NAME"
+      - "./build/libs/$JAR_NAME"
   before_script:
     - GRADLE_USER_HOME="$(pwd)/.gradle"
     - export GRADLE_USER_HOME
