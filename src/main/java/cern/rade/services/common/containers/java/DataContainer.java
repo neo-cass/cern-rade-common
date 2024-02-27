@@ -56,6 +56,9 @@ public class DataContainer{
         if(data instanceof Byte){
             dataType = DataType.DT_BYTE;
         }
+        else if(data instanceof Boolean){
+            dataType = DataType.DT_BOOL;
+        }
         else if(data instanceof Short){
             dataType = DataType.DT_SHORT;
         }
