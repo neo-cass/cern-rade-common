@@ -51,7 +51,7 @@ public class DataContainer{
     /**
      * sets {@link DataContainer#data}
      */
-    public void setData(Object data) {
+    public void setData(Object data) throws ContainerException {
         this.data = data;
         if(data instanceof Byte){
             dataType = DataType.DT_BYTE;

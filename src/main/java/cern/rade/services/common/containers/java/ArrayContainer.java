@@ -31,6 +31,7 @@ public class ArrayContainer extends DataContainer {
         super(name);
         this.elemName = elemName;
     }
+    //TODO: elemType not set??
     public ArrayContainer(String name, String elemName, DataType type){
         super(name, type);
         this.elemName = elemName;
@@ -64,12 +65,14 @@ public class ArrayContainer extends DataContainer {
     }
 
     //TODO: consider making a map type to map the array type to the elem type
-    //TODO: boolean type is missing
-    public void setData(Object[] data) {
+    public void setData(Object[] data) throws ContainerException {
         this.data = data;
         if (data instanceof Byte[]) {
             dataType = DataType.DT_BYTE_ARRAY;
             elemType = DataType.DT_BYTE;
+        } else if (data instanceof Boolean[]) {
+            dataType = DataType.DT_BOOL_ARRAY;
+            elemType = DataType.DT_BOOL;
         } else if (data instanceof Short[]) {
             dataType = DataType.DT_SHORT_ARRAY;
             elemType = DataType.DT_SHORT;
@@ -94,12 +97,15 @@ public class ArrayContainer extends DataContainer {
         this.dimensionLens = new int[]{data.length};
     }
 
-    public void setData(Object[] data, int[] dimensionLens) {
+    public void setData(Object[] data, int[] dimensionLens) throws ContainerException {
         this.data = data;
         this.dimensionLens = dimensionLens;
         if (data instanceof Byte[]) {
             dataType = DataType.DT_BYTE_MULTI_ARRAY;
             elemType = DataType.DT_BYTE;
+        } else if (data instanceof Boolean[]) {
+            dataType = DataType.DT_BOOL_MULTI_ARRAY;
+            elemType = DataType.DT_BOOL;
         } else if (data instanceof Short[]) {
             dataType = DataType.DT_SHORT_MULTI_ARRAY;
             elemType = DataType.DT_SHORT;
@@ -123,12 +129,15 @@ public class ArrayContainer extends DataContainer {
         }
     }
 
-    public void setData(Object[] data, int dim1, int dim2) {
+    public void setData(Object[] data, int dim1, int dim2) throws ContainerException {
         this.data = data;
         this.dimensionLens = new int[]{dim1, dim2};
         if (data instanceof Byte[]) {
             dataType = DataType.DT_BYTE_ARRAY_2D;
             elemType = DataType.DT_BYTE;
+        } else if (data instanceof Boolean[]) {
+            dataType = DataType.DT_BOOL_ARRAY_2D;
+            elemType = DataType.DT_BOOL;
         } else if (data instanceof Short[]) {
             dataType = DataType.DT_SHORT_ARRAY_2D;
             elemType = DataType.DT_SHORT;

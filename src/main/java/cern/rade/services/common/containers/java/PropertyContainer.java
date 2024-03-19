@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Encapsulates a property. In practice, a PropertyContainer is a DataContainer where the {@link DataContainer#data} is a {@link DataContainer}.
  */
-public class PropertyContainer extends DataContainer implements Cloneable{
+public class PropertyContainer extends DataContainer {
     private LinkedHashMap<String, DataContainer> data;
     public PropertyContainer(String name)   {
         super(name, DataType.DT_DATA);
@@ -34,19 +34,19 @@ public class PropertyContainer extends DataContainer implements Cloneable{
         }
         return field;
     }
-    public void setSimple(String name, Object field){
+    public void setSimple(String name, Object field) throws ContainerException {
         getOrCreateSimpleField(name).setData(field);
     }
 
-    public void setArray(String name, Object[] array){
+    public void setArray(String name, Object[] array) throws ContainerException {
         getOrCreateArrayField(name).setData(array);
     }
 
-    public void setArray(String name, Object[] array, int[] dimensions){
+    public void setArray(String name, Object[] array, int[] dimensions) throws ContainerException {
         getOrCreateArrayField(name).setData(array, dimensions);
     }
 
-    public void setArray(String name, Object[] array, int dim1, int dim2){
+    public void setArray(String name, Object[] array, int dim1, int dim2) throws ContainerException {
         getOrCreateArrayField(name).setData(array, dim1, dim2);
     }
     public void setProperty(String name, PropertyContainer field){
@@ -79,22 +79,4 @@ public class PropertyContainer extends DataContainer implements Cloneable{
         return strB.toString();
     }
 
-    @Override
-    public PropertyContainer clone() {
-        PropertyContainer clone = new PropertyContainer(name);
-        for(Map.Entry<String, DataContainer> entry : data.entrySet()){
-            DataContainer val = entry.getValue();
-            String key = entry.getKey();
-            if(val instanceof ArrayContainer){
-                clone.setDataContainer(key, new ArrayContainer(key));
-            }
-            else if(val instanceof PropertyContainer){
-                clone.setProperty(key, ((PropertyContainer) val).clone());
-            }
-            else {
-                clone.setDataContainer(key, new DataContainer(key));
-            }
-        }
-        return clone;
-    }
 }
