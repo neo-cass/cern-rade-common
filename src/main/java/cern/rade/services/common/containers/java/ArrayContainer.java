@@ -64,6 +64,7 @@ public class ArrayContainer extends DataContainer {
     }
 
     //TODO: consider making a map type to map the array type to the elem type
+    //TODO: boolean type is missing
     public void setData(Object[] data) {
         this.data = data;
         if (data instanceof Byte[]) {
@@ -161,6 +162,10 @@ public class ArrayContainer extends DataContainer {
         strB.append("Type: ").append(dataType).append("\n");
         strB.append("Element Name: ").append(elemName).append("\n");
         strB.append("Element Type: ").append(elemType).append("\n");
+        if(data==null){
+            strB.append("Data: null\n");
+            return strB.toString();
+        }
         strB.append("Data: [");
         for(int i = 0; i< data.length; i++){
             strB.append(data[i].toString());
