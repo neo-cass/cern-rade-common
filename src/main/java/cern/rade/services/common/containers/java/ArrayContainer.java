@@ -11,7 +11,7 @@ public class ArrayContainer extends DataContainer {
      * dimensions.length is the dimension of the array
      */
     private int[] dimensionLens;
-    private Object[] data;
+    private Object data;
 
     /**
      * elemName is strictly here because of LabVIEW. In LabVIEW each element has a label, however these are all the same
@@ -60,12 +60,12 @@ public class ArrayContainer extends DataContainer {
      * @return {@link ArrayContainer#elemType}
      */
     public DataType getElemType() {return elemType;}
-    public Object[] getData(){
+    public Object getData(){
         return this.data;
     }
 
     //TODO: consider making a map type to map the array type to the elem type
-    public void setData(Object[] data) throws ContainerException {
+    public void setData(Object data) throws ContainerException {
         this.data = data;
         if (data instanceof Byte[]) {
             dataType = DataType.DT_BYTE_ARRAY;
@@ -94,7 +94,7 @@ public class ArrayContainer extends DataContainer {
         } else {
             throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
         }
-        this.dimensionLens = new int[]{data.length};
+        this.dimensionLens = new int[]{((Object[])data).length};
     }
 
     public void setData(Object[] data, int[] dimensionLens) throws ContainerException {
@@ -176,9 +176,9 @@ public class ArrayContainer extends DataContainer {
             return strB.toString();
         }
         strB.append("Data: [");
-        for(int i = 0; i< data.length; i++){
-            strB.append(data[i].toString());
-            if(i != data.length - 1){strB.append(", ");}
+        for(int i = 0; i< ((Object[])data).length; i++){
+            strB.append(((Object[])data)[i].toString());
+            if(i != ((Object[])data).length - 1){strB.append(", ");}
         }
         strB.append("]\n");
         return strB.toString();
