@@ -1,6 +1,8 @@
 package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
+import org.apache.commons.lang3.ArrayUtils;
+
 /**
  * Holds a field which is an array
  * **/
@@ -11,7 +13,7 @@ public class ArrayContainer extends DataContainer {
      * dimensions.length is the dimension of the array
      */
     private int[] dimensionLens;
-    private Object data;
+    private Object[] data;
 
     /**
      * elemName is strictly here because of LabVIEW. In LabVIEW each element has a label, however these are all the same
@@ -60,14 +62,15 @@ public class ArrayContainer extends DataContainer {
      * @return {@link ArrayContainer#elemType}
      */
     public DataType getElemType() {return elemType;}
-    public Object getData(){
+    public Object[] getData(){
         return this.data;
     }
 
     //TODO: consider making a map type to map the array type to the elem type
     public void setData(Object data) throws ContainerException {
-        this.data = data;
-        if (data instanceof Byte[]) {
+        this.data = (Object[]) data;
+
+        if (data.getClass().isArray() && data.getClass().getComponentType() == Byte.TYPE) {
             dataType = DataType.DT_BYTE_ARRAY;
             elemType = DataType.DT_BYTE;
         } else if (data instanceof Boolean[]) {
@@ -76,7 +79,7 @@ public class ArrayContainer extends DataContainer {
         } else if (data instanceof Short[]) {
             dataType = DataType.DT_SHORT_ARRAY;
             elemType = DataType.DT_SHORT;
-        } else if (data instanceof Integer[]) {
+        } else if (data.getClass().isArray() && data.getClass().getComponentType() == Integer.TYPE) {
             dataType = DataType.DT_INT_ARRAY;
             elemType = DataType.DT_INT;
         } else if (data instanceof Long[]) {
