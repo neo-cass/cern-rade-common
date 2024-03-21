@@ -3,6 +3,8 @@ package cern.rade.services.common.containers.java;
 import cern.cmw.data.DataType;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.lang.reflect.Array;
+
 /**
  * Holds a field which is an array
  * **/
@@ -33,7 +35,7 @@ public class ArrayContainer extends DataContainer {
         super(name);
         this.elemName = elemName;
     }
-    //TODO: elemType not set??
+    //TODO: elemType not set? it is instead set in setData
     public ArrayContainer(String name, String elemName, DataType type){
         super(name, type);
         this.elemName = elemName;
@@ -68,100 +70,56 @@ public class ArrayContainer extends DataContainer {
 
     //TODO: consider making a map type to map the array type to the elem type
     public void setData(Object data) throws ContainerException {
-        this.data = data;
+        if(!data.getClass().isArray()){
+            throw new ContainerException("The data you are trying to set is not an array.");
+        }
+        Class<?> clazz = data.getClass();
+        Class<?> componentType = data.getClass().getComponentType();
+        if(!clazz.isPrimitive()){
+            this.data = ArrayUtils.toPrimitive(data);
+        }
+        else{
+            this.data = data;
+        }
 
-        if (data.getClass().isArray() && data.getClass().getComponentType() == Byte.TYPE) {
+        if (componentType == Byte.TYPE || componentType == Byte.class) {
             dataType = DataType.DT_BYTE_ARRAY;
             elemType = DataType.DT_BYTE;
-        } else if (data instanceof Boolean[]) {
+        } else if (componentType == Boolean.TYPE || componentType == Boolean.class) {
             dataType = DataType.DT_BOOL_ARRAY;
             elemType = DataType.DT_BOOL;
-        } else if (data instanceof Short[]) {
+        } else if (componentType == Short.TYPE || componentType == Short.class) {
             dataType = DataType.DT_SHORT_ARRAY;
             elemType = DataType.DT_SHORT;
-        } else if (data.getClass().isArray() && data.getClass().getComponentType() == Integer.TYPE) {
+        } else if (componentType == Integer.TYPE || componentType == Integer.class) {
             dataType = DataType.DT_INT_ARRAY;
             elemType = DataType.DT_INT;
-        } else if (data instanceof Long[]) {
+        } else if (componentType == Long.TYPE || componentType == Long.class){
             dataType = DataType.DT_LONG_ARRAY;
             elemType = DataType.DT_LONG;
-        } else if (data instanceof Double[]) {
+        } else if (componentType == Double.TYPE || componentType == Double.class) {
             dataType = DataType.DT_DOUBLE_ARRAY;
             elemType = DataType.DT_DOUBLE;
-        } else if (data instanceof Float[]) {
+        } else if (componentType == Float.TYPE || componentType == Float.class){
             dataType = DataType.DT_FLOAT_ARRAY;
             elemType = DataType.DT_FLOAT;
-        } else if (data instanceof String[]) {
+        } else if (componentType == String.class) {
             dataType = DataType.DT_STRING_ARRAY;
             elemType = DataType.DT_STRING;
         } else {
             throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
         }
-        this.dimensionLens = new int[]{((Object[])data).length};
+        this.dimensionLens = new int[]{Array.getLength(data)};
     }
 
-    public void setData(Object[] data, int[] dimensionLens) throws ContainerException {
-        this.data = data;
+    public void setData(Object data, int[] dimensionLens) throws ContainerException {
+        this.setData(data);
         this.dimensionLens = dimensionLens;
-        if (data instanceof Byte[]) {
-            dataType = DataType.DT_BYTE_MULTI_ARRAY;
-            elemType = DataType.DT_BYTE;
-        } else if (data instanceof Boolean[]) {
-            dataType = DataType.DT_BOOL_MULTI_ARRAY;
-            elemType = DataType.DT_BOOL;
-        } else if (data instanceof Short[]) {
-            dataType = DataType.DT_SHORT_MULTI_ARRAY;
-            elemType = DataType.DT_SHORT;
-        } else if (data instanceof Integer[]) {
-            dataType = DataType.DT_INT_MULTI_ARRAY;
-            elemType = DataType.DT_INT;
-        } else if (data instanceof Long[]) {
-            dataType = DataType.DT_LONG_MULTI_ARRAY;
-            elemType=DataType.DT_LONG;
-        } else if (data instanceof Double[]) {
-            dataType = DataType.DT_DOUBLE_MULTI_ARRAY;
-            elemType=DataType.DT_DOUBLE;
-        } else if (data instanceof Float[]) {
-            dataType = DataType.DT_FLOAT_MULTI_ARRAY;
-            elemType=DataType.DT_FLOAT;
-        } else if (data instanceof String[]) {
-            dataType = DataType.DT_STRING_MULTI_ARRAY;
-            elemType = DataType.DT_STRING;
-        } else {
-            throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
-        }
     }
 
-    public void setData(Object[] data, int dim1, int dim2) throws ContainerException {
-        this.data = data;
+    public void setData(Object data, int dim1, int dim2) throws ContainerException {
+        this.setData(data);
         this.dimensionLens = new int[]{dim1, dim2};
-        if (data instanceof Byte[]) {
-            dataType = DataType.DT_BYTE_ARRAY_2D;
-            elemType = DataType.DT_BYTE;
-        } else if (data instanceof Boolean[]) {
-            dataType = DataType.DT_BOOL_ARRAY_2D;
-            elemType = DataType.DT_BOOL;
-        } else if (data instanceof Short[]) {
-            dataType = DataType.DT_SHORT_ARRAY_2D;
-            elemType = DataType.DT_SHORT;
-        } else if (data instanceof Integer[]) {
-            dataType = DataType.DT_INT_ARRAY_2D;
-            elemType = DataType.DT_INT;
-        } else if (data instanceof Long[]) {
-            dataType = DataType.DT_LONG_ARRAY_2D;
-            elemType = DataType.DT_LONG;
-        } else if (data instanceof Double[]) {
-            dataType = DataType.DT_DOUBLE_ARRAY_2D;
-            elemType = DataType.DT_DOUBLE;
-        } else if (data instanceof Float[]) {
-            dataType = DataType.DT_FLOAT_ARRAY_2D;
-            elemType = DataType.DT_FLOAT;
-        } else if (data instanceof String[]) {
-            dataType = DataType.DT_STRING_ARRAY_2D;
-            elemType = DataType.DT_STRING;
-        } else {
-            throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
-        }
     }
 
 
