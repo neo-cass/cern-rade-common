@@ -5,6 +5,8 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
 
+import static cern.rade.services.common.containers.TypeLookup.getCMWType;
+
 /**
  * Holds a field which is an array
  * **/
@@ -38,6 +40,12 @@ public class ArrayContainer extends DataContainer {
     //TODO: elemType not set? it is instead set in setData
     public ArrayContainer(String name, String elemName, DataType type){
         super(name, type);
+        this.elemName = elemName;
+    }
+
+    public ArrayContainer(String name, String elemName, DataType type, DataType elemType){
+        super(name, type);
+        this.elemType=elemType;
         this.elemName = elemName;
     }
     public ArrayContainer()   {
@@ -81,44 +89,38 @@ public class ArrayContainer extends DataContainer {
         else{
             this.data = data;
         }
-
         if (componentType == Byte.TYPE || componentType == Byte.class) {
-            dataType = DataType.DT_BYTE_ARRAY;
             elemType = DataType.DT_BYTE;
         } else if (componentType == Boolean.TYPE || componentType == Boolean.class) {
-            dataType = DataType.DT_BOOL_ARRAY;
             elemType = DataType.DT_BOOL;
         } else if (componentType == Short.TYPE || componentType == Short.class) {
-            dataType = DataType.DT_SHORT_ARRAY;
             elemType = DataType.DT_SHORT;
         } else if (componentType == Integer.TYPE || componentType == Integer.class) {
-            dataType = DataType.DT_INT_ARRAY;
             elemType = DataType.DT_INT;
         } else if (componentType == Long.TYPE || componentType == Long.class){
-            dataType = DataType.DT_LONG_ARRAY;
             elemType = DataType.DT_LONG;
         } else if (componentType == Double.TYPE || componentType == Double.class) {
-            dataType = DataType.DT_DOUBLE_ARRAY;
             elemType = DataType.DT_DOUBLE;
         } else if (componentType == Float.TYPE || componentType == Float.class){
-            dataType = DataType.DT_FLOAT_ARRAY;
             elemType = DataType.DT_FLOAT;
         } else if (componentType == String.class) {
-            dataType = DataType.DT_STRING_ARRAY;
             elemType = DataType.DT_STRING;
         } else {
             throw new ContainerException("The data you are trying to set is of unsupported type: %s".formatted(data.getClass().getName()));
         }
+        dataType = getCMWType(elemType, 1);
         this.dimensionLens = new int[]{Array.getLength(data)};
     }
 
     public void setData(Object data, int[] dimensionLens) throws ContainerException {
         this.setData(data);
+        this.dataType = getCMWType(elemType, dimensionLens.length);
         this.dimensionLens = dimensionLens;
     }
 
     public void setData(Object data, int dim1, int dim2) throws ContainerException {
         this.setData(data);
+        this.dataType = getCMWType(elemType, 2);
         this.dimensionLens = new int[]{dim1, dim2};
     }
 
