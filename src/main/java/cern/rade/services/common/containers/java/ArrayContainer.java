@@ -4,6 +4,7 @@ import cern.cmw.data.DataType;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
+import java.util.Objects;
 
 import static cern.rade.services.common.containers.TypeLookup.getCMWType;
 
@@ -29,24 +30,26 @@ public class ArrayContainer extends DataContainer {
     private DataType elemType;
     public ArrayContainer(String name){
         super(name);
+        this.elemName="";
     }
     public ArrayContainer(String name, DataType type){
         super(name, type);
+        this.elemName="";
     }
     public ArrayContainer(String name, String elemName){
         super(name);
-        this.elemName = elemName;
+        this.elemName = Objects.requireNonNullElse(elemName, "");
     }
     //TODO: elemType not set? it is instead set in setData
     public ArrayContainer(String name, String elemName, DataType type){
         super(name, type);
-        this.elemName = elemName;
+        this.elemName = Objects.requireNonNullElse(elemName, "");
     }
 
     public ArrayContainer(String name, String elemName, DataType type, DataType elemType){
         super(name, type);
         this.elemType=elemType;
-        this.elemName = elemName;
+        this.elemName = Objects.requireNonNullElse(elemName, "");
     }
     public ArrayContainer()   {
         super();
@@ -138,12 +141,7 @@ public class ArrayContainer extends DataContainer {
             strB.append("Data: null\n");
             return strB.toString();
         }
-        strB.append("Data: [");
-        for(int i = 0; i< ((Object[])data).length; i++){
-            strB.append(((Object[])data)[i].toString());
-            if(i != ((Object[])data).length - 1){strB.append(", ");}
-        }
-        strB.append("]\n");
+        //TODO print data
         return strB.toString();
     }
 }

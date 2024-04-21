@@ -2,6 +2,8 @@ package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
 
+import java.util.Objects;
+
 /**
  * This class is made to encapsulate a field at CERN. However, it is slightly more abstract as we are using a type T
  * This allows the container to be used for fields or for encapsulating properties with multiple fields.
@@ -21,10 +23,10 @@ public class DataContainer{
      */
     protected DataType dataType;
     public DataContainer(String name)   {
-        this.name = name;
+        this.name = Objects.requireNonNullElse(name, "");;
     }
     public DataContainer(String name, DataType type)   {
-        this.name = name;
+        this.name = Objects.requireNonNullElse(name, "");;
         this.dataType = type;
     }
     public DataContainer(){}
@@ -36,7 +38,7 @@ public class DataContainer{
         return name;
     }
     public void setName(String name){
-        this.name = name;
+        this.name = Objects.requireNonNullElse(name, "");;
     }
     /**
      * @return {@link DataContainer#data}
