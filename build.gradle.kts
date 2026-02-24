@@ -1,10 +1,10 @@
 plugins {
     id ("java-library")
-    id ("cern.devops.cbng.dependency") version "4.0.83"
-
+    id ("cern.devops.cbng.dependency") version "4.9.0"
+    id("cern.devops.cbng.project") version "4.9.0"
     //when using the cbng publication dependnecy, the source and target compatibility (or java toolchain)
     //can be overwritten. In this case you must set autoconfigureJvm=false in gradle.properties
-    id("cern.devops.cbng.publication") version "4.0.83"
+    id("cern.devops.cbng.publication") version "4.9.0"
     kotlin("jvm") version "1.7.20"
 }
 
