@@ -1,6 +1,12 @@
 package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
+import cern.japc.value.MapParameterValue;
+import cern.japc.value.ParameterValue;
+import cern.japc.value.spi.value.SimpleParameterValueImpl;
+import cern.japc.value.spi.value.simple.;
+
+import cern.japc.value.spi.value.core.ParameterValueImpl;
 
 import java.util.Objects;
 
@@ -9,7 +15,7 @@ import java.util.Objects;
  * This allows the container to be used for fields or for encapsulating properties with multiple fields.
  * You can see this in {@link PropertyContainer}.
  */
-public class DataContainer{
+public class DataContainer extends Acquired {
     /**
      * name is the name of the field or property which this DataContainer encapsulates.
      */
