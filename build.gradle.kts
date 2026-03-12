@@ -23,6 +23,7 @@ repositories {
 dependencies {
     implementation("cern.cmw:cmw-data:PRO")
     implementation("cern.japc:japc-value:PRO")
+    implementation("cern.japc:japc:PRO")
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
 }

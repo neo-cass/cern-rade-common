@@ -2,6 +2,7 @@ package cern.rade.services.common.containers;
 import cern.cmw.data.DataType;
 import cern.japc.value.ValueType;
 import cern.rade.services.common.containers.labview.LVType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,173 +47,142 @@ public final class TypeLookup {
             entry((byte)0x53, LVType.VARIANT),
             entry((byte)-1, LVType.UNKNOWN)
     ));
-//    private static final HashMap<LVType, Byte> lookupByTypeMap = new HashMap<LVType, Byte>( Map.ofEntries(
-//            entry(LVType.INT_8, (byte)0x01),
-//            entry(LVType.INT_16, (byte)0x02),
-//            entry(LVType.INT_32, (byte)0x03),
-//            entry(LVType.INT_64, (byte)0x04),
-//            entry(LVType.UINT_8, (byte)0x05),
-//            entry(LVType.UINT_16, (byte)0x06),
-//            entry(LVType.UINT_32, (byte)0x07),
-//            entry(LVType.UINT_64, (byte)0x08),
-//            entry(LVType.SGL, (byte)0x09),
-//            entry(LVType.DBL, (byte)0x0A),
-//            entry(LVType.EXT, (byte)0x0B),
-//            entry(LVType.SGL_CPX, (byte)0x0C),
-//            entry(LVType.DBL_CPX, (byte)0x0D),
-//            entry(LVType.EXT_CPX, (byte)0x0E),
-//            entry(LVType.ENUM_8, (byte)0x15),
-//            entry(LVType.ENUM_16, (byte)0x16),
-//            entry(LVType.ENUM_32, (byte)0x17),
-//            entry(LVType.SGL_PHS, (byte)0x19),
-//            entry(LVType.DBL_PHS, (byte)0x1A),
-//            entry(LVType.EXT_PHS, (byte)0x1B),
-//            entry(LVType.SGL_PHS_CPX, (byte)0x1C),
-//            entry(LVType.DBL_PHS_CPX, (byte)0x1D),
-//            entry(LVType.EXT_PHS_CPX, (byte)0x1E),
-//            entry(LVType.BOOL, (byte)0x21),
-//            entry(LVType.STRING, (byte)0x30),
-//            entry(LVType.PATH, (byte)0x32),
-//            entry(LVType.PICTURE, (byte)0x33),
-//            entry(LVType.ARRAY, (byte)0x40),
-//            entry(LVType.CLUSTER, (byte)0x50),
-//            entry(LVType.WAVE_FORM, (byte)0x54),
-//            entry(LVType.REFNUM, (byte)0x70),
-//            entry(LVType.VARIANT, (byte)0x53),
-//            entry(LVType.UNKNOWN, (byte)-1)
-//
+
+//    private static final HashMap<DataType, Byte> lookupUpLVTypeCodeByCMW = new HashMap<>( Map.ofEntries(
+//            entry(DataType.DT_BYTE, (byte)0x01),
+//            entry(DataType.DT_BOOL, (byte)0x21),
+//            entry(DataType.DT_SHORT, (byte)0x02),
+//            entry(DataType.DT_INT, (byte)0x03),
+//            entry(DataType.DT_LONG, (byte)0x04),
+//            entry(DataType.DT_FLOAT, (byte)0x09),
+//            entry(DataType.DT_DOUBLE, (byte)0x0A),
+//            entry(DataType.DT_STRING, (byte)0x30),
+//            entry(DataType.DT_BYTE_ARRAY, (byte)0x40),
+//            entry(DataType.DT_BOOL_ARRAY, (byte)0x40),
+//            entry(DataType.DT_SHORT_ARRAY, (byte)0x40),
+//            entry(DataType.DT_INT_ARRAY, (byte)0x40),
+//            entry(DataType.DT_LONG_ARRAY, (byte)0x40),
+//            entry(DataType.DT_FLOAT_ARRAY, (byte)0x40),
+//            entry(DataType.DT_DOUBLE_ARRAY, (byte)0x40),
+//            entry(DataType.DT_STRING_ARRAY, (byte)0x40),
+//            entry(DataType.DT_BYTE_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_BOOL_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_SHORT_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_INT_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_LONG_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_FLOAT_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_DOUBLE_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_STRING_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_BYTE_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_BOOL_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_SHORT_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_INT_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_LONG_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_FLOAT_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_DOUBLE_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_STRING_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_DATA_ARRAY, (byte)0x40),
+//            entry(DataType.DT_DATA_ARRAY_2D, (byte)0x40),
+//            entry(DataType.DT_DATA_MULTI_ARRAY, (byte)0x40),
+//            entry(DataType.DT_DATA, (byte)0x50)
 //    ));
 
-    private static final HashMap<DataType, Byte> lookupUpLVTypeCodeByCMW = new HashMap<>( Map.ofEntries(
-            entry(DataType.DT_BYTE, (byte)0x01),
-            entry(DataType.DT_BOOL, (byte)0x21),
-            entry(DataType.DT_SHORT, (byte)0x02),
-            entry(DataType.DT_INT, (byte)0x03),
-            entry(DataType.DT_LONG, (byte)0x04),
-            entry(DataType.DT_FLOAT, (byte)0x09),
-            entry(DataType.DT_DOUBLE, (byte)0x0A),
-            entry(DataType.DT_STRING, (byte)0x30),
-            entry(DataType.DT_BYTE_ARRAY, (byte)0x40),
-            entry(DataType.DT_BOOL_ARRAY, (byte)0x40),
-            entry(DataType.DT_SHORT_ARRAY, (byte)0x40),
-            entry(DataType.DT_INT_ARRAY, (byte)0x40),
-            entry(DataType.DT_LONG_ARRAY, (byte)0x40),
-            entry(DataType.DT_FLOAT_ARRAY, (byte)0x40),
-            entry(DataType.DT_DOUBLE_ARRAY, (byte)0x40),
-            entry(DataType.DT_STRING_ARRAY, (byte)0x40),
-            entry(DataType.DT_BYTE_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_BOOL_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_SHORT_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_INT_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_LONG_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_FLOAT_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_DOUBLE_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_STRING_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_BYTE_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_BOOL_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_SHORT_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_INT_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_LONG_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_FLOAT_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_DOUBLE_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_STRING_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_DATA_ARRAY, (byte)0x40),
-            entry(DataType.DT_DATA_ARRAY_2D, (byte)0x40),
-            entry(DataType.DT_DATA_MULTI_ARRAY, (byte)0x40),
-            entry(DataType.DT_DATA, (byte)0x50)
+    private static final HashMap<LVType, ValueType> lookupJAPCTypeByLVType = new HashMap<>( Map.ofEntries(
+            entry(LVType.INT_8,   ValueType.BYTE),
+            entry(LVType.INT_16,  ValueType.SHORT),
+            entry(LVType.INT_32,  ValueType.INT),
+            entry(LVType.INT_64,  ValueType.LONG),
+            entry(LVType.UINT_8,  ValueType.SHORT),
+            entry(LVType.UINT_16, ValueType.INT),
+            entry(LVType.UINT_32, ValueType.LONG),
+            entry(LVType.SGL,     ValueType.FLOAT),
+            entry(LVType.DBL,     ValueType.DOUBLE),
+            entry(LVType.ENUM_8,  ValueType.ENUM),
+            entry(LVType.ENUM_16, ValueType.ENUM),
+            entry(LVType.ENUM_32, ValueType.ENUM),
+            entry(LVType.BOOL,    ValueType.BOOLEAN),
+            entry(LVType.STRING,  ValueType.STRING)
     ));
 
-    private static final HashMap<LVType, DataType> lookupCMWByLVType = new HashMap<>( Map.ofEntries(
-            entry(LVType.INT_8, DataType.DT_BYTE),
-            entry(LVType.INT_16, DataType.DT_SHORT),
-            entry(LVType.INT_32, DataType.DT_INT),
-            entry(LVType.INT_64, DataType.DT_LONG),
-            entry(LVType.UINT_8,DataType.DT_SHORT),
-            entry(LVType.UINT_16,DataType.DT_INT),
-            entry(LVType.UINT_32,DataType.DT_LONG),
-//entry(LVType.UINT_64,Data_Type.DT_BYTE),
-            entry(LVType.SGL,DataType.DT_FLOAT),
-            entry(LVType.DBL,DataType.DT_DOUBLE),
-//entry(LVType.EXT,Data_Type.DT_BYTE),
-//entry(LVType.SGL_CPX,Data_Type.DT_BYTE),
-//entry(LVType.DBL_CPX,Data_Type.DT_BYTE),
-//entry(LVType.EXT_CPX,Data_Type.DT_BYTE),
-            entry(LVType.ENUM_8,DataType.DT_BYTE),
-            entry(LVType.ENUM_16,DataType.DT_SHORT),
-            entry(LVType.ENUM_32,DataType.DT_INT),
-//entry(LVType.SGL_PHS,Data_Type.DT_BYTE),
-//entry(LVType.DBL_PHS,Data_Type.DT_BYTE),
-//entry(LVType.EXT_PHS,Data_Type.DT_BYTE),
-//entry(LVType.SGL_PHS_CPX,Data_Type.DT_BYTE),
-//entry(LVType.DBL_PHS_CPX,Data_Type.DT_BYTE),
-//entry(LVType.EXT_PHS_CPX,Data_Type.DT_BYTE),
-            entry(LVType.BOOL,DataType.DT_BOOL),
-            entry(LVType.STRING,DataType.DT_STRING),
-//entry(LVType.PATH,Data_Type.DT_BYTE),
-//entry(LVType.PICTURE,Data_Type.DT_BYTE),
-//entry(LVType.ARRAY,Data_Type.DT_BYTE),
-            entry(LVType.CLUSTER,DataType.DT_DATA)
-//entry(LVType.WAVE_FORM,Data_Type.DT_BYTE),
-//entry(LVType.REFNUM,Data_Type.DT_BYTE),
-//entry(LVType.VARIANT,Data_Type.DT_BYTE),
-//entry(LVType.UNKNOWN,Data_Type.DT_BYTE)
+//    private static final HashMap<ValueType, DataType> lookupCMWByJAPCType = new HashMap<>( Map.ofEntries(
+//            entry(ValueType.BYTE, DataType.DT_BYTE),
+//            entry(ValueType.SHORT, DataType.DT_SHORT),
+//            entry(ValueType.INT, DataType.DT_INT),
+//            entry(ValueType.LONG, DataType.DT_LONG),
+//            entry(ValueType.FLOAT,DataType.DT_FLOAT),
+//            entry(ValueType.DOUBLE,DataType.DT_DOUBLE),
+//            entry(ValueType.ENUM,DataType.DT_INT),
+//            entry(ValueType.BOOLEAN,DataType.DT_BOOL),
+//            entry(ValueType.STRING,DataType.DT_STRING),
+//
+//            entry(ValueType.BYTE_ARRAY, DataType.DT_BYTE_ARRAY),
+//            entry(ValueType.SHORT_ARRAY, DataType.DT_SHORT_ARRAY),
+//            entry(ValueType.INT_ARRAY, DataType.DT_INT_ARRAY),
+//            entry(ValueType.LONG_ARRAY, DataType.DT_LONG_ARRAY),
+//            entry(ValueType.FLOAT_ARRAY,DataType.DT_FLOAT_ARRAY),
+//            entry(ValueType.DOUBLE_ARRAY,DataType.DT_DOUBLE_ARRAY),
+//            entry(ValueType.ENUM_ARRAY,DataType.DT_INT_ARRAY),
+//            entry(ValueType.BOOLEAN_ARRAY,DataType.DT_BOOL_ARRAY),
+//            entry(ValueType.STRING_ARRAY,DataType.DT_STRING_ARRAY),
+//
+//            entry(ValueType.BYTE_ARRAY_2D, DataType.DT_BYTE_ARRAY_2D),
+//            entry(ValueType.SHORT_ARRAY_2D, DataType.DT_SHORT_ARRAY_2D),
+//            entry(ValueType.INT_ARRAY_2D, DataType.DT_INT_ARRAY_2D),
+//            entry(ValueType.LONG_ARRAY_2D, DataType.DT_LONG_ARRAY_2D),
+//            entry(ValueType.FLOAT_ARRAY_2D,DataType.DT_FLOAT_ARRAY_2D),
+//            entry(ValueType.DOUBLE_ARRAY_2D,DataType.DT_DOUBLE_ARRAY_2D),
+//            entry(ValueType.ENUM_ARRAY_2D,DataType.DT_INT_ARRAY_2D),
+//            entry(ValueType.BOOLEAN_ARRAY_2D,DataType.DT_BOOL_ARRAY_2D),
+//            entry(ValueType.STRING_ARRAY_2D,DataType.DT_STRING_ARRAY_2D)
+//    ));
+
+    private static final HashMap<ValueType, Byte> lookupLVTypeCodeByJAPCType = new HashMap<>( Map.ofEntries(
+            entry(ValueType.BYTE,             (byte)0x01),
+            entry(ValueType.SHORT,            (byte)0x02),
+            entry(ValueType.INT,              (byte)0x03),
+            entry(ValueType.LONG,             (byte)0x04),
+            entry(ValueType.FLOAT,            (byte)0x09),
+            entry(ValueType.DOUBLE,           (byte)0x0A),
+            entry(ValueType.ENUM,             (byte)0x03),
+            entry(ValueType.BOOLEAN,          (byte)0x21),
+            entry(ValueType.STRING,           (byte)0x30),
+
+            entry(ValueType.BYTE_ARRAY,       (byte)0x40),
+            entry(ValueType.SHORT_ARRAY,      (byte)0x40),
+            entry(ValueType.INT_ARRAY,        (byte)0x40),
+            entry(ValueType.LONG_ARRAY,       (byte)0x40),
+            entry(ValueType.FLOAT_ARRAY,      (byte)0x40),
+            entry(ValueType.DOUBLE_ARRAY,     (byte)0x40),
+            entry(ValueType.ENUM_ARRAY,       (byte)0x40),
+            entry(ValueType.BOOLEAN_ARRAY,    (byte)0x40),
+            entry(ValueType.STRING_ARRAY,     (byte)0x40),
+
+            entry(ValueType.BYTE_ARRAY_2D,    (byte)0x40),
+            entry(ValueType.SHORT_ARRAY_2D,   (byte)0x40),
+            entry(ValueType.INT_ARRAY_2D,     (byte)0x40),
+            entry(ValueType.LONG_ARRAY_2D,    (byte)0x40),
+            entry(ValueType.FLOAT_ARRAY_2D,   (byte)0x40),
+            entry(ValueType.DOUBLE_ARRAY_2D,  (byte)0x40),
+            entry(ValueType.ENUM_ARRAY_2D,    (byte)0x40),
+            entry(ValueType.BOOLEAN_ARRAY_2D, (byte)0x40),
+            entry(ValueType.STRING_ARRAY_2D,  (byte)0x40)
     ));
 
-    private static final HashMap<ValueType, DataType> lookupCMWByJAPCType = new HashMap<>( Map.ofEntries(
-            entry(ValueType.BYTE, DataType.DT_BYTE),
-            entry(ValueType.SHORT, DataType.DT_SHORT),
-            entry(ValueType.INT, DataType.DT_INT),
-            entry(ValueType.LONG, DataType.DT_LONG),
-            entry(ValueType.FLOAT,DataType.DT_FLOAT),
-            entry(ValueType.DOUBLE,DataType.DT_DOUBLE),
-            entry(ValueType.ENUM,DataType.DT_INT),
-            entry(ValueType.BOOLEAN,DataType.DT_BOOL),
-            entry(ValueType.STRING,DataType.DT_STRING),
-
-            entry(ValueType.BYTE_ARRAY, DataType.DT_BYTE_ARRAY),
-            entry(ValueType.SHORT_ARRAY, DataType.DT_SHORT_ARRAY),
-            entry(ValueType.INT_ARRAY, DataType.DT_INT_ARRAY),
-            entry(ValueType.LONG_ARRAY, DataType.DT_LONG_ARRAY),
-            entry(ValueType.FLOAT_ARRAY,DataType.DT_FLOAT_ARRAY),
-            entry(ValueType.DOUBLE_ARRAY,DataType.DT_DOUBLE_ARRAY),
-            entry(ValueType.ENUM_ARRAY,DataType.DT_INT_ARRAY),
-            entry(ValueType.BOOLEAN_ARRAY,DataType.DT_BOOL_ARRAY),
-            entry(ValueType.STRING_ARRAY,DataType.DT_STRING_ARRAY),
-
-            entry(ValueType.BYTE_ARRAY_2D, DataType.DT_BYTE_ARRAY_2D),
-            entry(ValueType.SHORT_ARRAY_2D, DataType.DT_SHORT_ARRAY_2D),
-            entry(ValueType.INT_ARRAY_2D, DataType.DT_INT_ARRAY_2D),
-            entry(ValueType.LONG_ARRAY_2D, DataType.DT_LONG_ARRAY_2D),
-            entry(ValueType.FLOAT_ARRAY_2D,DataType.DT_FLOAT_ARRAY_2D),
-            entry(ValueType.DOUBLE_ARRAY_2D,DataType.DT_DOUBLE_ARRAY_2D),
-            entry(ValueType.ENUM_ARRAY_2D,DataType.DT_INT_ARRAY_2D),
-            entry(ValueType.BOOLEAN_ARRAY_2D,DataType.DT_BOOL_ARRAY_2D),
-            entry(ValueType.STRING_ARRAY_2D,DataType.DT_STRING_ARRAY_2D)
-    ));
     private TypeLookup() {
 
     }
-    public static LVType getLVType(byte typeCode){
-        return lookupLVTypeByCode.get(typeCode);
+
+    public static LVType getLVType(byte type){
+        return lookupLVTypeByCode.get(type);
     }
 
-    /**
-     * @param lvType the LV type which you would like the corresponding CMW data type for.
-     * @return The CMW data type which corresponds to the LV type.
-     */
-    public static DataType getCMWType(LVType lvType){return lookupCMWByLVType.get(lvType);}
+    public static ValueType getJAPCType(LVType type){return lookupJAPCTypeByLVType.get(type);}
 
     /**
-     * @param japcType the japc type which you would like the corresponding CMW data type for.
-     * @return the CMW data type which corresponds to the japc type.
-     */
-    public static DataType getCMWType(ValueType japcType){return lookupCMWByJAPCType.get(japcType);}
-
-    /**
-     * @param dataType the data type which you would like the LV type code for.
+     * @param type the data type which you would like the LV type code for.
      * @return The LV type code which the CMW data type maps to.
      */
-    public static byte getLVTypeCode(DataType dataType){return lookupUpLVTypeCodeByCMW.get(dataType);}
+    public static byte getLVTypeCode(ValueType type){return lookupLVTypeCodeByJAPCType.get(type);}
 
     /**
      *
