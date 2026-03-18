@@ -1,17 +1,16 @@
 package cern.rade.services.common.containers.java;
 
-import cern.japc.core.factory.SimpleParameterValueFactory;
-import cern.japc.value.SimpleParameterValue;
-import cern.japc.value.ValueType;
 import cern.japc.value.spi.value.SimpleParameterValueImpl;
 
-public class FieldContainer extends DataContainer<SimpleParameterValue> {
+
+
+public class FieldContainer extends SimpleParameterValueImpl implements DataContainer {
+    private final String fieldName;
     public FieldContainer(String name) {
-        setName(name);
-        setParameterValue(SimpleParameterValueFactory.newSimpleParameterValue());
+        this.fieldName = name;
     }
 
-    public ValueType getType(){
-        return getParameterValue().getValueType(getName());
+    public String getName(){
+        return fieldName;
     }
 }

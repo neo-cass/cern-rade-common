@@ -1,22 +1,14 @@
 package cern.rade.services.common.containers.java;
 
-import cern.japc.value.MapParameterValue;
-import cern.japc.core.factory.MapParameterValueFactory;
-import cern.japc.value.ValueType;
+import cern.japc.core.spi.value.MapParameterValueImpl;
 
-public class PropertyContainer extends DataContainer<MapParameterValue> {
-
+public class PropertyContainer extends MapParameterValueImpl implements DataContainer {
+    private final String propertyName;
     public PropertyContainer(String name) {
-        setName(name);
-        setParameterValue(MapParameterValueFactory.newMapParameterValue());
+        this.propertyName = name;
     }
 
-    public ValueType getFieldType(String name){
-        return getParameterValue().getValueType(name);
+    public String getName() {
+        return propertyName;
     }
-
-    public void setFieldValue(FieldContainer fc) {
-        getParameterValue().put(fc.getName(), fc.getParameterValue());
-    }
-
 }
