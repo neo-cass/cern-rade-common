@@ -184,6 +184,14 @@ public final class TypeLookup {
      */
     public static byte getLVTypeCode(ValueType type){return lookupLVTypeCodeByJAPCType.get(type);}
 
+    public static byte getLVClusterTypeCode(){
+        return  (byte) 0x50;
+    }
+
+    public static byte getLVArrayTypeCode(){
+        return  (byte) 0x40;
+    }
+
     /**
      *
      * @param dt the data type of the elements in the array.
