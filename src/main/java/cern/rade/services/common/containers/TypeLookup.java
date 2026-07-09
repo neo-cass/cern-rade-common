@@ -2,7 +2,6 @@ package cern.rade.services.common.containers;
 import cern.cmw.data.DataType;
 import cern.japc.value.ValueType;
 import cern.rade.services.common.containers.labview.LVType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.HashMap;
 import java.util.Map;

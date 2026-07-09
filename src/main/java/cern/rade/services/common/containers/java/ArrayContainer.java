@@ -2,7 +2,6 @@ package cern.rade.services.common.containers.java;
 
 import cern.cmw.data.DataType;
 import cern.japc.value.ValueType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
