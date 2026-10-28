@@ -1,11 +1,10 @@
 plugins {
     id ("java-library")
-    id ("cern.devops.cbng.dependency") version "4.9.0"
-    id("cern.devops.cbng.project") version "4.9.0"
+    id ("cern.devops.cbng.dependency")
+    id("cern.devops.cbng.project")
     //when using the cbng publication dependnecy, the source and target compatibility (or java toolchain)
     //can be overwritten. In this case you must set autoconfigureJvm=false in gradle.properties
-    id("cern.devops.cbng.publication") version "4.9.0"
-    kotlin("jvm") version "1.7.20"
+    id("cern.devops.cbng.publication")
 }
 
 configurations.configureEach {
@@ -14,10 +13,6 @@ configurations.configureEach {
 
 repositories {
     mavenCentral()
-    // our package index to resolve dependencies
-    maven {
-        url = uri("https://artifactory.cern.ch/release")
-    }
 }
 
 dependencies {
@@ -37,11 +32,11 @@ tasks.named<Jar>("jar") {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
 
     }
     withJavadocJar()
