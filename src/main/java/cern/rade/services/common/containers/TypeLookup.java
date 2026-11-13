@@ -5,12 +5,27 @@ import cern.rade.services.common.containers.labview.LVType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import static java.util.Map.entry;
 
 /**
  * Utility class which contains mappings of types in one form to another.
  */
 public final class TypeLookup {
+    /**
+     * Type code used to mark a JAPC discrete function. It is not reserved by LabVIEW (see NI "Type descriptors").
+     * The descriptor is the one of a 2D array of DBL (row 0 = X, row 1 = Y), only the type code (0x40 for an array)
+     * is replaced by this one.
+     */
+    private static final byte DISCRETE_FUNCTION_TYPE_CODE = (byte) 0x60;
+
+    /**
+     * Type code used to mark a JAPC enum item set. It is not reserved by LabVIEW (see NI "Type descriptors").
+     * The descriptor is the one of a cluster of BOOL (one per enum item, labelled with the item name), only the type
+     * code (0x50 for a cluster) is replaced by this one.
+     */
+    private static final byte ENUM_SET_TYPE_CODE = (byte) 0x61;
+
     private static final HashMap<Byte, LVType> lookupLVTypeByCode = new HashMap<>( Map.ofEntries(
             entry((byte)0x01, LVType.INT_8),
             entry((byte)0x02, LVType.INT_16),
@@ -44,6 +59,8 @@ public final class TypeLookup {
             entry((byte)0x54, LVType.WAVE_FORM),
             entry((byte)0x70, LVType.REFNUM),
             entry((byte)0x53, LVType.VARIANT),
+            entry(DISCRETE_FUNCTION_TYPE_CODE, LVType.DISCRETE_FUNCTION),
+            entry(ENUM_SET_TYPE_CODE, LVType.ENUM_SET),
             entry((byte)-1, LVType.UNKNOWN)
     ));
 
@@ -94,13 +111,18 @@ public final class TypeLookup {
             entry(LVType.UINT_8,  ValueType.SHORT),
             entry(LVType.UINT_16, ValueType.INT),
             entry(LVType.UINT_32, ValueType.LONG),
+            // JAPC has no unsigned types: an unsigned LV type maps to the next larger signed type, except U64 (the
+            // values above Long.MAX_VALUE cannot be represented)
+            entry(LVType.UINT_64, ValueType.LONG),
             entry(LVType.SGL,     ValueType.FLOAT),
             entry(LVType.DBL,     ValueType.DOUBLE),
             entry(LVType.ENUM_8,  ValueType.ENUM),
             entry(LVType.ENUM_16, ValueType.ENUM),
             entry(LVType.ENUM_32, ValueType.ENUM),
             entry(LVType.BOOL,    ValueType.BOOLEAN),
-            entry(LVType.STRING,  ValueType.STRING)
+            entry(LVType.STRING,  ValueType.STRING),
+            entry(LVType.DISCRETE_FUNCTION, ValueType.DISCRETE_FUNCTION),
+            entry(LVType.ENUM_SET, ValueType.ENUM_SET)
     ));
 
 //    private static final HashMap<ValueType, DataType> lookupCMWByJAPCType = new HashMap<>( Map.ofEntries(
@@ -142,9 +164,13 @@ public final class TypeLookup {
             entry(ValueType.LONG,             (byte)0x04),
             entry(ValueType.FLOAT,            (byte)0x09),
             entry(ValueType.DOUBLE,           (byte)0x0A),
-            entry(ValueType.ENUM,             (byte)0x03),
+            entry(ValueType.ENUM,             (byte)0x16),
+            entry(ValueType.ENUM_SET,         ENUM_SET_TYPE_CODE),
             entry(ValueType.BOOLEAN,          (byte)0x21),
             entry(ValueType.STRING,           (byte)0x30),
+            entry(ValueType.DISCRETE_FUNCTION, DISCRETE_FUNCTION_TYPE_CODE),
+            // a list is a 1D LV array (0x40) of 1-element clusters holding a discrete function (see LVType.DISCRETE_FUNCTION)
+            entry(ValueType.DISCRETE_FUNCTION_LIST, (byte)0x40),
 
             entry(ValueType.BYTE_ARRAY,       (byte)0x40),
             entry(ValueType.SHORT_ARRAY,      (byte)0x40),
@@ -153,6 +179,7 @@ public final class TypeLookup {
             entry(ValueType.FLOAT_ARRAY,      (byte)0x40),
             entry(ValueType.DOUBLE_ARRAY,     (byte)0x40),
             entry(ValueType.ENUM_ARRAY,       (byte)0x40),
+            entry(ValueType.ENUM_SET_ARRAY,   (byte)0x40),
             entry(ValueType.BOOLEAN_ARRAY,    (byte)0x40),
             entry(ValueType.STRING_ARRAY,     (byte)0x40),
 
@@ -163,9 +190,15 @@ public final class TypeLookup {
             entry(ValueType.FLOAT_ARRAY_2D,   (byte)0x40),
             entry(ValueType.DOUBLE_ARRAY_2D,  (byte)0x40),
             entry(ValueType.ENUM_ARRAY_2D,    (byte)0x40),
+            entry(ValueType.ENUM_SET_ARRAY_2D, (byte)0x40),
             entry(ValueType.BOOLEAN_ARRAY_2D, (byte)0x40),
             entry(ValueType.STRING_ARRAY_2D,  (byte)0x40)
     ));
+
+    private static final HashMap<LVType, Byte> lookupLVTypeCodeByLVType = new HashMap<>();
+    static {
+        lookupLVTypeByCode.forEach((code, type) -> lookupLVTypeCodeByLVType.put(type, code));
+    }
 
     private TypeLookup() {
 
@@ -180,8 +213,49 @@ public final class TypeLookup {
     /**
      * @param type the data type which you would like the LV type code for.
      * @return The LV type code which the CMW data type maps to.
+     * @throws IllegalArgumentException if the data type has no LV type code, use {@link #findLVTypeCode(ValueType)} to check.
      */
-    public static byte getLVTypeCode(ValueType type){return lookupLVTypeCodeByJAPCType.get(type);}
+    public static byte getLVTypeCode(ValueType type){
+        return findLVTypeCode(type).orElseThrow(() -> new IllegalArgumentException("No LV type code for JAPC type " + type));
+    }
+
+    /**
+     * @param type the data type which you would like the LV type code for.
+     * @return The LV type code which the JAPC data type maps to, empty if it has none (e.g. UNDEFINED).
+     */
+    public static Optional<Byte> findLVTypeCode(ValueType type){
+        return Optional.ofNullable(lookupLVTypeCodeByJAPCType.get(type));
+    }
+
+    /**
+     * @param type the data type which you would like the LV type for.
+     * @return The LV type which the JAPC data type maps to, empty if it has none (e.g. UNDEFINED).
+     */
+    public static Optional<LVType> findLVType(ValueType type){
+        return findLVTypeCode(type).map(TypeLookup::getLVType);
+    }
+
+    /**
+     * @param type the LV type
+     * @return the LV type code of the given LV type
+     */
+    public static byte getLVTypeCode(LVType type){return lookupLVTypeCodeByLVType.get(type);}
+
+    /**
+     * @return the (non LabVIEW) type code used to mark a JAPC discrete function, i.e. a 2D DBL array descriptor
+     *         (X row, Y row) whose type code 0x40 is replaced by this one.
+     */
+    public static byte getLVDiscreteFunctionTypeCode(){
+        return DISCRETE_FUNCTION_TYPE_CODE;
+    }
+
+    /**
+     * @return the (non LabVIEW) type code used to mark a JAPC enum item set, i.e. a cluster descriptor of BOOL (one per
+     *         enum item, labelled with the item name) whose type code 0x50 is replaced by this one.
+     */
+    public static byte getLVEnumSetTypeCode(){
+        return ENUM_SET_TYPE_CODE;
+    }
 
     public static byte getLVClusterTypeCode(){
         return  (byte) 0x50;

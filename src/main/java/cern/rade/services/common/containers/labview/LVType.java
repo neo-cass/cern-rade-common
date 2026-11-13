@@ -36,6 +36,25 @@ public enum LVType {
      WAVE_FORM,
      REFNUM,
      VARIANT,
+     /**
+      * Not a LabVIEW type: JAPC discrete function. LabVIEW describes it as a 2D array of DBL (row 0 = X values,
+      * row 1 = Y values, so that X and Y always have the same length) and patches the type code of that array
+      * descriptor from 0x40 to {@link cern.rade.services.common.containers.TypeLookup#getLVDiscreteFunctionTypeCode()}.
+      * The flattened data is the one of the 2D array: dim0 (=2), dim1 (=N), the N X values then the N Y values.
+      * <p>
+      * A JAPC discrete function list is not a type of its own: it is a 1D LV array whose element is a cluster of
+      * exactly one element, a DISCRETE_FUNCTION (LabVIEW cannot nest an array directly in an array).
+      */
+     DISCRETE_FUNCTION,
+     /**
+      * Not a LabVIEW type: JAPC enum item set. LabVIEW describes it as a cluster of BOOL, one per enum item, each labelled
+      * with the item name (the JAPC enum item symbol), and patches the type code of that cluster descriptor from 0x50 to
+      * {@link cern.rade.services.common.containers.TypeLookup#getLVEnumSetTypeCode()}.
+      * The flattened data is the one of the cluster: one byte (1 or 0) per item, in the order of the descriptor.
+      * <p>
+      * Arrays of enum sets are 1D or 2D LV arrays whose element is this cluster.
+      */
+     ENUM_SET,
      UNKNOWN;
      private LVType(){}
 }
